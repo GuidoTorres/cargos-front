@@ -6,5 +6,5 @@ export const ProtectedRoute = ({ children }) => {
   const navigate = useNavigate();
 
   const { isLogged } = useContext(InventarioContext);
-  return !isLogged ? <Navigate to="/" replace /> : children;
+  return localStorage.getItem("token") ? <Navigate to="/" replace /> : children;
 };

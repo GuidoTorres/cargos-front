@@ -16,27 +16,18 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [menuId, setMenuId] = useState(1)
-  // Función para determinar la clave seleccionada en función de la ruta
-  const getSelectedKey = () => {
+  // Usar un string que corresponda a la 'key' del ítem del menú
+  const [selectedKey, setSelectedKey] = useState("");
+
+  // Actualizar la clave seleccionada en función de la ruta actual
+  useEffect(() => {
     const path = location.pathname;
-    if (path === "/trabajadores") return 1;
-    if (path === "/equipos") return 2;
-    if (path === "/unidad") return 3;
-    if (path === "/cargos") return 4;
-    // if (path === "/mantenimiento") return 5;
-    if (path === "/dashboard") return 5;
-    return 1; 
-  };
+    setSelectedKey(path);
+  }, [location]);
+
   const handleMenuClick = (e) => {
     navigate(e.key);
   };
-
-  useEffect(()=>{
-
-    setMenuId(getSelectedKey())
-  },[getSelectedKey])
-
 
   
   return (
@@ -49,15 +40,15 @@ const Sidebar = () => {
 
       <Menu
         mode="inline"
-        defaultSelectedKeys={[menuId]}
+        selectedKeys={[selectedKey]}
         className="menu-bar"
         items={[
-          { key: "/trabajadores", icon: <UserOutlined />, label: "Trabajadores" },
-          { key: "/equipos", icon: <LaptopOutlined />, label: "Equipos" },
-          { key: "/unidad", icon: <ApartmentOutlined />, label: "Unidad" },
+          // { key: "/trabajadores", icon: <UserOutlined />, label: "Trabajadores" },
+          // { key: "/equipos", icon: <LaptopOutlined />, label: "Equipos" },
+          // { key: "/unidad", icon: <ApartmentOutlined />, label: "Unidad" },
           { key: "/cargos", icon: <SolutionOutlined />, label: "Cargos" },
           // { key: "/mantenimiento", icon: <ToolOutlined />, label: "Mantenimiento" },
-          { key: "/dashboard", icon: <AreaChartOutlined />, label: "Dashboard" },
+          // { key: "/dashboard", icon: <AreaChartOutlined />, label: "Dashboard" },
         ]}
         onClick={handleMenuClick}
       />

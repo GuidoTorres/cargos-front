@@ -16,6 +16,7 @@ const HeaderContent = ({ title }) => {
   const cerrarSesion = () => {
 
     setIsLogged(false)
+    localStorage.removeItem("token")
     navigate("/");
   };
   return (

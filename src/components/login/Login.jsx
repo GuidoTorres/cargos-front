@@ -34,6 +34,7 @@ const Login = ({  }) => {
         message: confirm.msg,
       });
       setIsLogged(true);
+      localStorage.setItem("token", confirm.tokenSession)
       navigate("/trabajadores");
     } else {
       notification.error({

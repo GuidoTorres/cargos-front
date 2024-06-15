@@ -3,7 +3,7 @@ import { createContext, useState } from "react";
 export const InventarioContext = createContext();
 
 export const InventarioProvider = ({ children }) => {
-  const [isLogged, setIsLogged] = useState([]);
+  const [isLogged, setIsLogged] = useState(true);
 
   const info = {
     isLogged,

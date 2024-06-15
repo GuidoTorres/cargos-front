@@ -19,7 +19,84 @@ const RegistrarEquipo = ({
   setEditar,
 }) => {
   const [form] = Form.useForm();
+  const valoresAqp= [
+    {
+      value: "Modulo 1",
+      label: "Modulo 1",
+    },
+    {
+      value: "Modulo 2",
+      label: "Modulo 2",
+    },
+    {
+      value: "Modulo 3",
+      label: "Modulo 3",
+    },
+    {
+      value: "Modulo 4",
+      label: "Modulo 4",
+    },
+    {
+      value: "Modulo 5",
+      label: "Modulo 5",
+    },
+    {
+      value: "Modulo 6",
+      label: "Modulo 6",
+    },
+    {
+      value: "Modulo 7",
+      label: "Modulo 7",
+    },
+    {
+      value: "OCI",
+      label: "OCI",
+    },
+    {
+      value: "OPIP",
+      label: "OPIP",
+    },
+    {
+      value: "Gestión ambiental",
+      label: "Gestión ambiental",
+    },
+    {
+      value: "Almacén",
+      label: "Almacén",
+    },
+    {
+      value: "Transporte",
+      label: "Transporte",
+    },
+  ]
 
+  const valoresMajes= [
+    {
+      value: "Sector Majes",
+      label: "Sector Majes",
+    },
+    {
+      value: "Canal 2R",
+      label: "Canal 2R",
+    },
+    {
+      value: "Canal 3R",
+      label: "Canal 3R",
+    },
+    {
+      value: "Pitay",
+      label: "Pitay",
+    },
+    {
+      value: "Santa Rita",
+      label: "Santa Rita",
+    },
+    {
+      value: "Rio Arma",
+      label: "Rio Arma",
+    },
+    
+  ]
   const [equipo, setEquipo] = useState({});
   const [area, setArea] = useState([]);
   const [trabajador, setTrabajador] = useState([]);
@@ -394,36 +471,8 @@ const RegistrarEquipo = ({
               value={equipo.modulo}
               onChange={(e) => handleData(e, "modulo")}
               allowClear
-              options={[
-                {
-                  value: "Modulo 1",
-                  label: "Modulo 1",
-                },
-                {
-                  value: "Modulo 2",
-                  label: "Modulo 2",
-                },
-                {
-                  value: "Modulo 3",
-                  label: "Modulo 3",
-                },
-                {
-                  value: "Modulo 4",
-                  label: "Modulo 4",
-                },
-                {
-                  value: "Modulo 5",
-                  label: "Modulo 5",
-                },
-                {
-                  value: "Modulo 6",
-                  label: "Modulo 6",
-                },
-                {
-                  value: "Modulo 7",
-                  label: "Modulo 7",
-                },
-              ]}
+              options={equipo.sector === "Cayma" ? valoresAqp : equipo.sector === "Majes" ? valoresMajes : null}
+
             />
           </Form.Item>
         </div>

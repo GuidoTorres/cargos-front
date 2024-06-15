@@ -22,15 +22,15 @@ const MainPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [collapsed, setCollapsed] = useState(false);
-  const [title, setTitle] = useState("Trabajador");
+  const [collapsed, setCollapsed] = useState(true);
+  const [title, setTitle] = useState("Cargos");
   const { setIsLogged, isLogged } = useContext(InventarioContext);
 
 
 
   return (
     <Layout>
-      {!isLogged ? (
+      {!isLogged && !localStorage.getItem("token") ? (
         <Login setIsLogged={setIsLogged} />
       ) : (
         <>
@@ -57,7 +57,7 @@ const MainPage = () => {
             </Header>
             <Content className="content">
               <Routes>
-                <Route
+                {/* <Route
                   path="/trabajadores"
                   element={<ProtectedRoute><TablaTrabajador setTitle={setTitle} /></ProtectedRoute>}
                 />
@@ -65,7 +65,7 @@ const MainPage = () => {
                   path="/equipos"
                   element={<ProtectedRoute><Equipos setTitle={setTitle} /></ProtectedRoute>}
                 />
-                <Route path="/unidad" element={<ProtectedRoute><Areas setTitle={setTitle} /></ProtectedRoute>} />
+                <Route path="/unidad" element={<ProtectedRoute><Areas setTitle={setTitle} /></ProtectedRoute>} /> */}
                 <Route
                   path="/cargos"
                   element={<ProtectedRoute><Cargos setTitle={setTitle} /></ProtectedRoute>}
@@ -74,10 +74,10 @@ const MainPage = () => {
                   path="/mantenimiento"
                   element={<ProtectedRoute><Mantenimientos setTitle={setTitle} /></ProtectedRoute>}
                 /> */}
-                <Route
+                {/* <Route
                   path="/dashboard"
                   element={<ProtectedRoute><Dashboard setTitle={setTitle} /></ProtectedRoute>}
-                />
+                /> */}
               </Routes>
             </Content>
           </Layout>

@@ -71,7 +71,7 @@ const Cargos = ({ setTitle }) => {
   ];
 
   const getAsignaciones = async () => {
-    const response = await fetch("http://localhost:3001/api/v1/asignacion");
+    const response = await fetch("http://10.30.1.42:8084/api/v1/asignacion");
     const info = await response.json();
     if (info) {
       setAsignaciones(info.data);
@@ -171,7 +171,7 @@ const Cargos = ({ setTitle }) => {
   const handleDetalles = async (docData) => {
     setModalDetalles(true);
     const response = await fetch(
-      `http://localhost:3001/api/v1/asignacion/bienes?cod_usuario=${docData.de_cod_usuario}&fecha_asig=${docData.fecha_asigna}`
+      `http://10.30.1.42:8084/api/v1/asignacion/bienes?cod_usuario=${docData.de_cod_usuario}&fecha_asig=${docData.fecha_asigna}`
     );
     const info = await response.json();
     if (info) {
@@ -182,14 +182,14 @@ const Cargos = ({ setTitle }) => {
   const searchData = async (value) => {
     if (value) {
       const response = await fetch(
-        `http://localhost:3001/api/v1/asignacion?search=${value}`
+        `http://10.30.1.42:8084/api/v1/asignacion?search=${value}`
       );
       const info = await response.json();
       if (info) {
         setAsignaciones(info.data);
       }
     } else {
-      const response = await fetch(`http://localhost:3001/api/v1/asignacion`);
+      const response = await fetch(`http://10.30.1.42:8084/api/v1/asignacion`);
       const info = await response.json();
       if (info) {
         setAsignaciones(info.data);
@@ -211,7 +211,7 @@ const Cargos = ({ setTitle }) => {
 
   const getCentroCosto = async (docData) => {
     const response = await fetch(
-      `http://localhost:3001/api/v1/centro_costo?centro=${docData.centro_costo}&ubicac=${docData.cod_ubicac}&anio=${docData.ano_eje}&${docData.sec_ejec}`
+      `http://10.30.1.42:8084/api/v1/centro_costo?centro=${docData.centro_costo}&ubicac=${docData.cod_ubicac}&anio=${docData.ano_eje}&${docData.sec_ejec}`
     );
     const info = await response.json();
     if (info) {
@@ -222,7 +222,7 @@ const Cargos = ({ setTitle }) => {
 
   const getBienes = async (docData) => {
     const response = await fetch(
-      `http://localhost:3001/api/v1/asignacion/bienes?cod_usuario=${docData.de_cod_usuario}&fecha_asig=${docData.fecha_asigna}`
+      `http://10.30.1.42:8084/api/v1/asignacion/bienes?cod_usuario=${docData.de_cod_usuario}&fecha_asig=${docData.fecha_asigna}`
     );
     const info = await response.json();
     if (info) {
@@ -233,7 +233,7 @@ const Cargos = ({ setTitle }) => {
 
   const getUbicacion = async (docData) => {
     const response = await fetch(
-      `http://localhost:3001/api/v1/ubicacion?tipo=${docData.tipo_ubicac}&cod_ubicac=${docData.cod_ubicac}`
+      `http://10.30.1.42:8084/api/v1/ubicacion?tipo=${docData.tipo_ubicac}&cod_ubicac=${docData.cod_ubicac}`
     );
     const info = await response.json();
     if (info) {
@@ -260,14 +260,14 @@ const Cargos = ({ setTitle }) => {
       const fechaFin = fechas.at(1);
 
       const response = await fetch(
-        `http://localhost:3001/api/v1/asignacion?inicio=${fechaInicio}&fin=${fechaFin}`
+        `http://10.30.1.42:8084/api/v1/asignacion?inicio=${fechaInicio}&fin=${fechaFin}`
       );
       const info = await response.json();
       if (info) {
         setAsignaciones(info.data);
       }
     } else {
-      const response = await fetch(`http://localhost:3001/api/v1/asignacion`);
+      const response = await fetch(`http://10.30.1.42:8084/api/v1/asignacion`);
       const info = await response.json();
       if (info) {
         setAsignaciones(info.data);
@@ -277,7 +277,7 @@ const Cargos = ({ setTitle }) => {
 
   const handleUpdate = async () => {
     const response = await fetch(
-      `http://localhost:3001/api/v1/asignacion/actualizar`,
+      `http://10.30.1.42:8084/api/v1/asignacion/actualizar`,
       {
         method: "PUT",
         headers: {
@@ -299,7 +299,7 @@ const Cargos = ({ setTitle }) => {
   };
 
   const handleDelete = async (id) => {
-    const response = await fetch(`http://localhost:3005/api/v1/cargos/${id}`, {
+    const response = await fetch(`http://10.30.1.42:8084/api/v1/cargos/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

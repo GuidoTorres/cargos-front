@@ -26,7 +26,12 @@ const MainPage = () => {
   const [title, setTitle] = useState("Cargos");
   const { setIsLogged, isLogged } = useContext(InventarioContext);
 
-
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setIsLogged(false);
+    }
+  }, [setIsLogged]);
 
   return (
     <Layout>
@@ -41,7 +46,6 @@ const MainPage = () => {
             collapsed={collapsed}
             className="sider"
           >
-            {" "}
             <Sidebar />
             <Button
               type="text"
@@ -68,7 +72,11 @@ const MainPage = () => {
                 <Route path="/unidad" element={<ProtectedRoute><Areas setTitle={setTitle} /></ProtectedRoute>} /> */}
                 <Route
                   path="/cargos"
-                  element={<ProtectedRoute><Cargos setTitle={setTitle} /></ProtectedRoute>}
+                  element={
+                    <ProtectedRoute>
+                      <Cargos setTitle={setTitle} />
+                    </ProtectedRoute>
+                  }
                 />
                 {/* <Route
                   path="/mantenimiento"

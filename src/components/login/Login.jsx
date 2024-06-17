@@ -3,12 +3,10 @@ import React, { useContext, useState } from "react";
 import imagen from "../../assets/autodema.png";
 import { useNavigate, useLocation } from "react-router-dom";
 import { InventarioContext } from "../../context/InventarioContext";
-const Login = ({  }) => {
+const Login = ({}) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const {
-    setIsLogged, isLogged
-  } = useContext(InventarioContext);
+  const { setIsLogged, isLogged } = useContext(InventarioContext);
   const [data, setData] = useState({
     usuario: "",
     contrasenia: "",
@@ -20,7 +18,7 @@ const Login = ({  }) => {
   };
 
   const auth = async () => {
-    const response = await fetch(`http://localhost:3005/api/v1/auth`, {
+    const response = await fetch(`http://10.30.1.42:8084/api/v1/auth`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -34,8 +32,8 @@ const Login = ({  }) => {
         message: confirm.msg,
       });
       setIsLogged(true);
-      localStorage.setItem("token", confirm.tokenSession)
-      navigate("/trabajadores");
+      localStorage.setItem("token", confirm.tokenSession);
+      navigate("/cargos");
     } else {
       notification.error({
         message: confirm.msg,
@@ -85,7 +83,7 @@ const Login = ({  }) => {
             }}
             onClick={auth}
           >
-            Registrar
+            Iniciar Sesión
           </Button>
         </div>
       </div>

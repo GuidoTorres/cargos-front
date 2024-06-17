@@ -1,14 +1,15 @@
 {
   "files": {
     "main.css": "/static/css/main.bf6bcf26.css",
-    "main.js": "/static/js/main.1f85238c.js",
+    "main.js": "/static/js/main.35a2fefd.js",
+    "static/media/logo_autodema.png": "/static/media/logo_autodema.642a68f43e26ce328e0d.png",
     "static/media/autodema.png": "/static/media/autodema.a845f188402744ae60e6.png",
     "index.html": "/index.html",
     "main.bf6bcf26.css.map": "/static/css/main.bf6bcf26.css.map",
-    "main.1f85238c.js.map": "/static/js/main.1f85238c.js.map"
+    "main.35a2fefd.js.map": "/static/js/main.35a2fefd.js.map"
   },
   "entrypoints": [
     "static/css/main.bf6bcf26.css",
-    "static/js/main.1f85238c.js"
+    "static/js/main.35a2fefd.js"
   ]
 }

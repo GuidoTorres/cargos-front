@@ -10,7 +10,7 @@ import {
   Image,
 } from "@react-pdf/renderer";
 import dayjs, { Dayjs } from "dayjs";
-import image from "../../assets/autodema.png";
+import image from "../../assets/logo_autodema.png";
 import font from "../../assets/autodema.png";
 import { es } from "dayjs/locale/es";
 
@@ -119,17 +119,21 @@ const CargoPersonal = ({ data, docData, centroCosto, ubicacion }) => {
               flexDirection: "row",
             }}
           >
-            <View style={{ flex: 1, flexDirection: "column", fontSize: 7 }}>
-              <Image src={image} style={{ width: "180px", height: "70px" }} />
-              <Text style={{ ...styles.bold, paddingLeft: "10px" }}>
-                Sistema Integrado de Gestión Administrativa
-              </Text>
-              <Text style={{ ...styles.bold, paddingLeft: "10px" }}>
-                Módulo de Patrimonio
-              </Text>
-              <Text style={{ ...styles.bold, paddingLeft: "10px" }}>
-                Version 24.01.00.U2.MCMM
-              </Text>
+            <View style={{ flex: 1, flexDirection: "row", fontSize: 7 }}>
+              <View style={{ flex: 1, justifyContent:"center"}}>
+                <Image src={image} style={{ width: "60px", height: "60px" }} />
+              </View>
+              <View style={{ flex: 3, paddingTop:"10px" }}>
+                <Text style={{ ...styles.bold, paddingLeft: "10px" }}>
+                  Sistema Integrado de Gestión Administrativa
+                </Text>
+                <Text style={{ ...styles.bold, paddingLeft: "10px" }}>
+                  Módulo de Patrimonio
+                </Text>
+                <Text style={{ ...styles.bold, paddingLeft: "10px" }}>
+                  Version 24.01.00.U2.MCMM
+                </Text>
+              </View>
             </View>
             <View
               style={{
@@ -309,7 +313,7 @@ const CargoPersonal = ({ data, docData, centroCosto, ubicacion }) => {
                   style={{ ...styles.tableCol1, width: "5%", height: "25px" }}
                 >
                   <Text
-                    style={{ ...styles.tableCell, verticalAlign: "center" }}
+                    style={{ ...styles.tableCell, ...styles.bold, verticalAlign: "center" }}
                   >
                     Nro
                   </Text>
@@ -317,44 +321,44 @@ const CargoPersonal = ({ data, docData, centroCosto, ubicacion }) => {
                 <View
                   style={{ ...styles.tableCol1, width: "10%", height: "25px" }}
                 >
-                  <Text style={{ ...styles.tableCell, textAlign: "center" }}>
+                  <Text style={{ ...styles.tableCell, ...styles.bold, textAlign: "center" }}>
                     Código Patrimonial
                   </Text>
                 </View>
                 <View
-                  style={{ ...styles.tableCol1, width: "10%", height: "25px" }}
+                  style={{ ...styles.tableCol1, ...styles.bold, width: "10%", height: "25px" }}
                 >
                   <Text style={{ ...styles.tableCell, textAlign: "center" }}>
                     Código Barras / Inv. Ant
                   </Text>
                 </View>
                 <View
-                  style={{ ...styles.tableCol1, width: "25%", height: "25px" }}
+                  style={{ ...styles.tableCol1, ...styles.bold, width: "25%", height: "25px" }}
                 >
                   <Text style={styles.tableCell}>Descripción</Text>
                 </View>
                 <View
-                  style={{ ...styles.tableCol1, width: "16%", height: "25px" }}
+                  style={{ ...styles.tableCol1, ...styles.bold, width: "16%", height: "25px" }}
                 >
                   <Text style={styles.tableCell}>Marca</Text>
                 </View>
                 <View
-                  style={{ ...styles.tableCol1, width: "10%", height: "25px" }}
+                  style={{ ...styles.tableCol1, ...styles.bold, width: "10%", height: "25px" }}
                 >
                   <Text style={styles.tableCell}>Modelo</Text>
                 </View>
                 <View
-                  style={{ ...styles.tableCol1, width: "10%", height: "25px" }}
+                  style={{ ...styles.tableCol1, ...styles.bold, width: "10%", height: "25px" }}
                 >
                   <Text style={styles.tableCell}>Serie</Text>
                 </View>
                 <View
-                  style={{ ...styles.tableCol1, width: "7%", height: "25px" }}
+                  style={{ ...styles.tableCol1, ...styles.bold, width: "7%", height: "25px" }}
                 >
                   <Text style={styles.tableCell}>Medidas</Text>
                 </View>
                 <View
-                  style={{ ...styles.tableCol1, width: "7%", height: "25px" }}
+                  style={{ ...styles.tableCol1, ...styles.bold, width: "7%", height: "25px" }}
                 >
                   <Text style={styles.tableCell}>Estado</Text>
                 </View>

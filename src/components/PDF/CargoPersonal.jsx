@@ -120,10 +120,10 @@ const CargoPersonal = ({ data, docData, centroCosto, ubicacion }) => {
             }}
           >
             <View style={{ flex: 1, flexDirection: "row", fontSize: 7 }}>
-              <View style={{ flex: 1, justifyContent:"center"}}>
+              <View style={{ flex: 1, justifyContent: "center" }}>
                 <Image src={image} style={{ width: "60px", height: "60px" }} />
               </View>
-              <View style={{ flex: 3, paddingTop:"10px" }}>
+              <View style={{ flex: 3, paddingTop: "10px" }}>
                 <Text style={{ ...styles.bold, paddingLeft: "10px" }}>
                   Sistema Integrado de Gestión Administrativa
                 </Text>
@@ -313,7 +313,11 @@ const CargoPersonal = ({ data, docData, centroCosto, ubicacion }) => {
                   style={{ ...styles.tableCol1, width: "5%", height: "25px" }}
                 >
                   <Text
-                    style={{ ...styles.tableCell, ...styles.bold, verticalAlign: "center" }}
+                    style={{
+                      ...styles.tableCell,
+                      ...styles.bold,
+                      verticalAlign: "center",
+                    }}
                   >
                     Nro
                   </Text>
@@ -321,44 +325,85 @@ const CargoPersonal = ({ data, docData, centroCosto, ubicacion }) => {
                 <View
                   style={{ ...styles.tableCol1, width: "10%", height: "25px" }}
                 >
-                  <Text style={{ ...styles.tableCell, ...styles.bold, textAlign: "center" }}>
+                  <Text
+                    style={{
+                      ...styles.tableCell,
+                      ...styles.bold,
+                      textAlign: "center",
+                    }}
+                  >
                     Código Patrimonial
                   </Text>
                 </View>
                 <View
-                  style={{ ...styles.tableCol1, ...styles.bold, width: "10%", height: "25px" }}
+                  style={{
+                    ...styles.tableCol1,
+                    ...styles.bold,
+                    width: "10%",
+                    height: "25px",
+                  }}
                 >
                   <Text style={{ ...styles.tableCell, textAlign: "center" }}>
                     Código Barras / Inv. Ant
                   </Text>
                 </View>
                 <View
-                  style={{ ...styles.tableCol1, ...styles.bold, width: "25%", height: "25px" }}
+                  style={{
+                    ...styles.tableCol1,
+                    ...styles.bold,
+                    width: "25%",
+                    height: "25px",
+                  }}
                 >
                   <Text style={styles.tableCell}>Descripción</Text>
                 </View>
                 <View
-                  style={{ ...styles.tableCol1, ...styles.bold, width: "16%", height: "25px" }}
+                  style={{
+                    ...styles.tableCol1,
+                    ...styles.bold,
+                    width: "16%",
+                    height: "25px",
+                  }}
                 >
                   <Text style={styles.tableCell}>Marca</Text>
                 </View>
                 <View
-                  style={{ ...styles.tableCol1, ...styles.bold, width: "10%", height: "25px" }}
+                  style={{
+                    ...styles.tableCol1,
+                    ...styles.bold,
+                    width: "10%",
+                    height: "25px",
+                  }}
                 >
                   <Text style={styles.tableCell}>Modelo</Text>
                 </View>
                 <View
-                  style={{ ...styles.tableCol1, ...styles.bold, width: "10%", height: "25px" }}
+                  style={{
+                    ...styles.tableCol1,
+                    ...styles.bold,
+                    width: "10%",
+                    height: "25px",
+                  }}
                 >
                   <Text style={styles.tableCell}>Serie</Text>
                 </View>
                 <View
-                  style={{ ...styles.tableCol1, ...styles.bold, width: "7%", height: "25px" }}
+                  style={{
+                    ...styles.tableCol1,
+                    ...styles.bold,
+                    width: "7%",
+                    height: "25px",
+                  }}
                 >
                   <Text style={styles.tableCell}>Medidas</Text>
                 </View>
                 <View
-                  style={{ ...styles.tableCol1, ...styles.bold, width: "7%", height: "25px" }}
+                  style={{
+                    ...styles.tableCol1,
+                    ...styles.bold,
+                    width: "7%",
+                    height: "25px",
+                  }}
                 >
                   <Text style={styles.tableCell}>Estado</Text>
                 </View>
@@ -488,7 +533,21 @@ const CargoPersonal = ({ data, docData, centroCosto, ubicacion }) => {
                     }}
                   >
                     <Text style={{ ...styles.tableCell, fontSize: 7 }}>
-                      {item?.estado}
+                      {item?.estado == "1"
+                        ? "Bueno"
+                        : item?.estado == "2"
+                        ? "Regular"
+                        : item?.estado == "3"
+                        ? "Malo"
+                        : item?.estado == "4"
+                        ? "Muy Malo"
+                        : item?.estado == "5"
+                        ? "Nuevo"
+                        : item?.estado == "6"
+                        ? "Chatarra"
+                        : item?.estado == "7"
+                        ? "RAEE"
+                        : ""}
                     </Text>
                   </View>
                 </View>

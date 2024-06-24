@@ -1,0 +1,40 @@
+.container{
+
+    border-radius: 6px;
+    padding: 5px;
+    width: 100%;
+    padding: 50px;
+    padding-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+.options{
+    border: 1px solid red;
+    flex: 1;
+    padding: 20px;
+}
+.header1{
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 80px;
+    
+}
+.title{
+    display: flex;
+    flex-direction: column;
+    flex:4;
+    font-weight: bold;
+    font-size: "18px";
+}
+.imagen1{
+    flex:1;
+    height: 100%;
+}
+.title{
+    font-weight: bold;
+    
+}

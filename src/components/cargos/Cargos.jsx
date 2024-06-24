@@ -141,7 +141,11 @@ const Cargos = ({ setTitle }) => {
       title: "Fecha",
       dataIndex: "fecha_asig",
       align: "center",
-      sorter: (a, b) => a.fecha_asig.localeCompare(b.fecha_asig),
+      sorter: (a, b) => {
+        const dateA = dayjs(a.fecha_asig, "DD-MM-YYYY");
+        const dateB = dayjs(b.fecha_asig, "DD-MM-YYYY");
+        return dateA.isBefore(dateB) ? -1 : dateA.isAfter(dateB) ? 1 : 0;
+      },
     },
     {
       title: "Acciones",
@@ -201,7 +205,7 @@ const Cargos = ({ setTitle }) => {
     try {
       const centro_costo = await getCentroCosto(docData);
       const bien = await getBienes(docData);
-      const ubicacion = await getUbicacion(docData)
+      const ubicacion = await getUbicacion(docData);
       console.log(ubicacion);
       handlePrintDetalles(docData, bien, centro_costo.costo, ubicacion);
     } catch (error) {
@@ -217,7 +221,7 @@ const Cargos = ({ setTitle }) => {
     if (info) {
       setCentroCosto(info.data);
     }
-    return info.data
+    return info.data;
   };
 
   const getBienes = async (docData) => {
@@ -228,7 +232,7 @@ const Cargos = ({ setTitle }) => {
     if (info) {
       setBienes(info.data);
     }
-    return info.data
+    return info.data;
   };
 
   const getUbicacion = async (docData) => {
@@ -239,12 +243,22 @@ const Cargos = ({ setTitle }) => {
     if (info) {
       setUbicacion(info.data);
     }
-    return info.data
+    return info.data;
   };
 
-  const handlePrintDetalles = async (docData, value, centroCosto, ubicacion) => {
+  const handlePrintDetalles = async (
+    docData,
+    value,
+    centroCosto,
+    ubicacion
+  ) => {
     const blob = await pdf(
-      <CargoPersonal data={value} docData={docData} centroCosto={centroCosto} ubicacion={ubicacion} />
+      <CargoPersonal
+        data={value}
+        docData={docData}
+        centroCosto={centroCosto}
+        ubicacion={ubicacion}
+      />
     ).toBlob();
     // Crea una URL de objeto para el Blob y abre en una nueva pestaña
     const url = URL.createObjectURL(blob);

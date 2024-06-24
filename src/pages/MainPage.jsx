@@ -16,6 +16,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Login from "../components/login/Login";
 import { InventarioContext } from "../context/InventarioContext";
 import { ProtectedRoute } from "../routes/ProtectedRoute";
+import Adeudo from "../components/adeudos/Adeudo";
 const { Sider, Header, Content } = Layout;
 
 const MainPage = () => {
@@ -78,10 +79,10 @@ const MainPage = () => {
                     </ProtectedRoute>
                   }
                 />
-                {/* <Route
-                  path="/mantenimiento"
-                  element={<ProtectedRoute><Mantenimientos setTitle={setTitle} /></ProtectedRoute>}
-                /> */}
+                <Route
+                  path="/adeudo"
+                  element={<ProtectedRoute><Adeudo setTitle={setTitle} /></ProtectedRoute>}
+                />
                 {/* <Route
                   path="/dashboard"
                   element={<ProtectedRoute><Dashboard setTitle={setTitle} /></ProtectedRoute>}

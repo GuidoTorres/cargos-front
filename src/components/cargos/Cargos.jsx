@@ -206,7 +206,6 @@ const Cargos = ({ setTitle }) => {
       const centro_costo = await getCentroCosto(docData);
       const bien = await getBienes(docData);
       const ubicacion = await getUbicacion(docData);
-      console.log(ubicacion);
       handlePrintDetalles(docData, bien, centro_costo.costo, ubicacion);
     } catch (error) {
       console.error("Error generating PDFs:", error);
@@ -226,7 +225,7 @@ const Cargos = ({ setTitle }) => {
 
   const getBienes = async (docData) => {
     const response = await fetch(
-      `http://10.30.1.42:8084/api/v1/asignacion/bienes?cod_usuario=${docData.de_cod_usuario}&fecha_asig=${docData.fecha_asigna}`
+      `http://10.30.1.42:8084/api/v1/asignacion/bienes?cod_usuario=${docData.de_cod_usuario}&fecha_asig=${docData.fecha_asigna}&nro_interno=${docData.nro_interno}`
     );
     const info = await response.json();
     if (info) {

@@ -107,10 +107,13 @@ const CargoPersonal = ({ data, docData, centroCosto, ubicacion }) => {
   };
 
   const paginatedData = paginate(data, ITEMS_PER_PAGE);
-  console.log(data);
+  console.log("Document Data:", docData);
+  console.log("Data:", data);
+  console.log("Centro Costo:", centroCosto);
+  console.log("Ubicación:", ubicacion);
   return (
     <Document>
-      {paginatedData.map((pageData, pageIndex) => (
+      {paginatedData?.map((pageData, pageIndex) => (
         <Page style={styles.page} key={pageIndex} orientation="landscape">
           <View
             style={{

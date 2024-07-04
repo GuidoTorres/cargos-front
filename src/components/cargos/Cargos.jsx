@@ -46,30 +46,6 @@ const Cargos = ({ setTitle }) => {
     getAsignaciones();
   }, []);
 
-  const data = [
-    {
-      sec: 1,
-      codigo_patrimonial: 123123,
-      codigo_barra: 123,
-      descripcion: "estabilizador",
-      serie: 1,
-    },
-    {
-      sec: 1,
-      codigo_patrimonial: 123123,
-      codigo_barra: 123,
-      descripcion: "estabilizador",
-      serie: 1,
-    },
-    {
-      sec: 1,
-      codigo_patrimonial: 123123,
-      codigo_barra: 123,
-      descripcion: "estabilizador",
-      serie: 1,
-    },
-  ];
-
   const getAsignaciones = async () => {
     const response = await fetch("http://10.30.1.42:8084/api/v1/asignacion");
     const info = await response.json();
@@ -78,49 +54,6 @@ const Cargos = ({ setTitle }) => {
     }
   };
 
-  const CARGODATA = [
-    {
-      unidadEjecutora: "005 - AUTORIDAD AUTONOMA DE MAJES",
-      dependencia:
-        "01.06.02.01 - OPERACIÓN Y MANTENIMIENTO SISTEMA CHILI - REGULADO",
-      ubicacionFisica: "SUBGERENCIA DE OPERACION Y MANTENIMIENTO - JEFATURA",
-      nroIdentificacion: "001137",
-      usuarioFinal: "PALMA CRUZ YLDEFONSO JORGE",
-      fechaAsignacion: "23/05/2024",
-      items: [
-        {
-          codigoPatrimonial: "112263860241",
-          codigoBarras: "1",
-          descripcion: "REFRIGERADORA ELECTRICA DOMESTICA DE 6 PIES",
-          marca: "DURAMA",
-        },
-        {
-          codigoPatrimonial: "322266010036",
-          codigoBarras: "2",
-          descripcion: "HORNO MICROONDAS 32 L",
-          marca: "SAMSUNG",
-        },
-      ],
-      observaciones: "Poder escribir en las observaciones",
-    },
-    {
-      unidadEjecutora: "006 - OTRA AUTORIDAD",
-      dependencia: "01.06.02.02 - OTRA DEPENDENCIA",
-      ubicacionFisica: "OTRA SUBGERENCIA",
-      nroIdentificacion: "001137",
-      usuarioFinal: "OTRO USUARIO",
-      fechaAsignacion: "23/05/2024",
-      items: [
-        {
-          codigoPatrimonial: "212263860241",
-          codigoBarras: "3",
-          descripcion: "OTRO EQUIPO",
-          marca: "OTRA MARCA",
-        },
-      ],
-      observaciones: "Otras observaciones",
-    },
-  ];
   const columns = [
     {
       title: "Nro Desplaz",
@@ -128,13 +61,23 @@ const Cargos = ({ setTitle }) => {
       align: "center",
     },
     {
+      title: "Nro Orden",
+      dataIndex: "patrimonio_nro_orden",
+      align: "center",
+    },
+    {
+      title: "Correlativo",
+      dataIndex: "id_correlativo",
+      align: "center",
+    },
+    {
       title: "De",
-      dataIndex: "de_usuario",
+      dataIndex: "nombre_empleado",
       align: "center",
     },
     {
       title: "Para",
-      dataIndex: "para_usuario",
+      dataIndex: "nombre_empleado_final",
       align: "center",
     },
     {
@@ -175,7 +118,7 @@ const Cargos = ({ setTitle }) => {
   const handleDetalles = async (docData) => {
     setModalDetalles(true);
     const response = await fetch(
-      `http://10.30.1.42:8084/api/v1/asignacion/bienes?cod_usuario=${docData.de_cod_usuario}&fecha_asig=${docData.fecha_asigna}`
+      `http://10.30.1.42:8084/api/v1/asignacion/bienes?cod_usuario=${docData.de_cod_usuario}&fecha_asig=${docData.fecha_asigna}&orden=${docData.patrimonio_nro_orden}`
     );
     const info = await response.json();
     if (info) {
@@ -225,7 +168,7 @@ const Cargos = ({ setTitle }) => {
 
   const getBienes = async (docData) => {
     const response = await fetch(
-      `http://10.30.1.42:8084/api/v1/asignacion/bienes?cod_usuario=${docData.de_cod_usuario}&fecha_asig=${docData.fecha_asigna}&nro_interno=${docData.nro_interno}`
+      `http://10.30.1.42:8084/api/v1/asignacion/bienes?cod_usuario=${docData.de_cod_usuario}&emple=${docData.para_cod_usuario}&fecha_asig=${docData.fecha_asigna}&orden=${docData.patrimonio_nro_orden}`
     );
     const info = await response.json();
     if (info) {
@@ -301,6 +244,11 @@ const Cargos = ({ setTitle }) => {
     const confirm = await response.json();
 
     if (response.status === 200) {
+            const response = await fetch(`http://10.30.1.42:8084/api/v1/asignacion`);
+      const info = await response.json();
+      if (info) {
+        setAsignaciones(info.data);
+      }
       notification.success({
         message: confirm.msg,
       });
@@ -537,7 +485,7 @@ const Cargos = ({ setTitle }) => {
                 }}
               >
                 <Search
-                  placeholder="Buscar"
+                  placeholder="Buscar por nro orden o usuario final"
                   onChange={(e) => searchData(e.target.value)}
                 />
               </div>
@@ -603,7 +551,7 @@ const Cargos = ({ setTitle }) => {
       <Table columns={columns} dataSource={asignaciones} />
       {isModalOpen && (
         <div>
-          <ImprimirCargo data={CARGODATA} />
+          <ImprimirCargo />
         </div>
       )}
       {modalDetalles && (

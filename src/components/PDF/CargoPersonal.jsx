@@ -270,7 +270,7 @@ const CargoPersonal = ({ data, docData, centroCosto, ubicacion }) => {
             >
               <View style={{ flexDirection: "row" }}>
                 <Text style={styles.bold}>RESPONSABLE: </Text>
-                <Text style={styles.regular}>{docData?.de_usuario}</Text>
+                <Text style={styles.regular}>{docData?.nombre_empleado}</Text>
               </View>
               <View style={{ flexDirection: "row" }}>
                 <Text style={styles.bold}>USUARIO FINAL: </Text>

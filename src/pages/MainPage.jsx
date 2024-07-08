@@ -17,6 +17,7 @@ import Login from "../components/login/Login";
 import { InventarioContext } from "../context/InventarioContext";
 import { ProtectedRoute } from "../routes/ProtectedRoute";
 import Adeudo from "../components/adeudos/Adeudo";
+import Etiquetas from "../components/etiquetas/Etiquetas";
 const { Sider, Header, Content } = Layout;
 
 const MainPage = () => {
@@ -81,7 +82,19 @@ const MainPage = () => {
                 />
                 <Route
                   path="/adeudo"
-                  element={<ProtectedRoute><Adeudo setTitle={setTitle} /></ProtectedRoute>}
+                  element={
+                    <ProtectedRoute>
+                      <Adeudo setTitle={setTitle} />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/etiquetas"
+                  element={
+                    <ProtectedRoute>
+                      <Etiquetas setTitle={setTitle} />
+                    </ProtectedRoute>
+                  }
                 />
                 {/* <Route
                   path="/dashboard"

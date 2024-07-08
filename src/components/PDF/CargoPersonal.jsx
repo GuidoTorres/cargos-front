@@ -537,7 +537,7 @@ const CargoPersonal = ({ data, docData, centroCosto, ubicacion }) => {
                   >
                     <Text style={{ ...styles.tableCell, fontSize: 7 }}>
                       {item?.estado == "1"
-                        ? "Bueno"
+                        ? "Nuevo"
                         : item?.estado == "2"
                         ? "Regular"
                         : item?.estado == "3"

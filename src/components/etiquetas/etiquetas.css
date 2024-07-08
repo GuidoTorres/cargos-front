@@ -1,0 +1,46 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 5px;
+    margin-top: -30px;
+}
+.filters{
+    display: flex;
+    gap: 10px;
+
+
+}
+.filters-left{
+    flex: 1;
+    border: 1px solid lightgrey;
+    padding: 10px;
+    border-radius: 6px;
+}
+.filters-left div{
+    display: flex;
+}
+.filters-left div label{
+    width: 40%;
+    text-align: left;
+}
+.filters-right{
+    flex: 1;
+    border: 1px solid lightgrey;
+    padding: 10px;
+    border-radius: 6px;
+    
+}
+.filters-right div{
+    display: flex;
+    
+}
+.filters-right div label{
+    width: 20%;
+    text-align: left;
+}
+.search{
+    display: flex;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

@@ -7,6 +7,8 @@ import {
   ToolOutlined,
   AreaChartOutlined,
   SolutionOutlined,
+  FormOutlined,
+  BarcodeOutlined,
 } from "@ant-design/icons";
 import "./styles/sidebar.css";
 import imagen from "../assets/autodema.png";
@@ -43,12 +45,10 @@ const Sidebar = () => {
         selectedKeys={[selectedKey]}
         className="menu-bar"
         items={[
-          // { key: "/trabajadores", icon: <UserOutlined />, label: "Trabajadores" },
-          // { key: "/equipos", icon: <LaptopOutlined />, label: "Equipos" },
-          // { key: "/unidad", icon: <ApartmentOutlined />, label: "Unidad" },
           { key: "/cargos", icon: <SolutionOutlined />, label: "Cargos" },
-          // { key: "/adeudo", icon: <ToolOutlined />, label: "Adeudos" },
-          // { key: "/dashboard", icon: <AreaChartOutlined />, label: "Dashboard" },
+          // { key: "/adeudo", icon: <FormOutlined />, label: "Adeudos" },
+          // { key: "/etiquetas", icon: <BarcodeOutlined />, label: "Etiquetas" },
+
         ]}
         onClick={handleMenuClick}
       />

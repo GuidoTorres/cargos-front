@@ -46,6 +46,7 @@ const Cargos = ({ setTitle }) => {
     getAsignaciones();
   }, []);
 
+
   const getAsignaciones = async () => {
     const response = await fetch("http://10.30.1.42:8084/api/v1/asignacion");
     const info = await response.json();
@@ -188,6 +189,8 @@ const Cargos = ({ setTitle }) => {
     return info.data;
   };
 
+
+
   const handlePrintDetalles = async (
     docData,
     value,
@@ -244,7 +247,7 @@ const Cargos = ({ setTitle }) => {
     const confirm = await response.json();
 
     if (response.status === 200) {
-            const response = await fetch(`http://10.30.1.42:8084/api/v1/asignacion`);
+      const response = await fetch(`http://10.30.1.42:8084/api/v1/asignacion`);
       const info = await response.json();
       if (info) {
         setAsignaciones(info.data);
@@ -279,24 +282,6 @@ const Cargos = ({ setTitle }) => {
       });
     }
   };
-  // const onSearch = (val) => {
-  //   const filterData = () => {
-  //     let value = val.toLowerCase(); // Convertir el valor de búsqueda a minúsculas
-
-  //     if (!val) {
-  //       return cargos;
-  //     } else {
-  //       const filter = cargos.filter(
-  //         (item) =>
-  //           item?.nombres?.toLowerCase().includes(value) ||
-  //           item?.descripcion?.toLowerCase().includes(value) ||
-  //           item?.area?.nombre?.toLowerCase().includes(value)
-  //       );
-  //       return filter;
-  //     }
-  //   };
-  //   setSearch(filterData());
-  // };
   return (
     <>
       <div
@@ -323,151 +308,6 @@ const Cargos = ({ setTitle }) => {
               gap: "5px",
             }}
           >
-            {/* <div style={{ display: "flex", alignItems: "center" }}>
-              <label htmlFor="" style={{ flex: 1, textAlign: "left" }}>
-                Sede
-              </label>
-              <Select
-                className="input-form"
-                // value={tipo || undefined}
-                placeholder={"Sede"}
-                // onChange={(e) => setTipo(e)}
-                showSearch
-                style={{ flex: 2 }}
-                optionFilterProp="children"
-                filterOption={(input, option) =>
-                  (option?.label ?? "")
-                    .toLowerCase()
-                    .includes(input.toLowerCase())
-                }
-                allowClear
-                options={sedes.map((item) => {
-                  return {
-                    value: item.sede,
-                    label: item.nombre_sede,
-                  };
-                })}
-              />
-            </div>
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <label htmlFor="" style={{ flex: 1, textAlign: "left" }}>
-                Centro de costo
-              </label>
-
-              <Select
-                className="input-form"
-                // value={tipo || undefined}
-                placeholder={"Centro de costo"}
-                // onChange={(e) => setTipo(e)}
-                showSearch
-                style={{ flex: 2 }}
-                optionFilterProp="children"
-                filterOption={(input, option) =>
-                  (option?.label ?? "")
-                    .toLowerCase()
-                    .includes(input.toLowerCase())
-                }
-                allowClear
-                options={centroCosto.map((item) => {
-                  return {
-                    value: item.nombre_depend,
-                    label: item.centroCosto,
-                  };
-                })}
-              />
-            </div> */}
-            {/* <div style={{ display: "flex", alignItems: "center" }}>
-              <label htmlFor="" style={{ flex: 1, textAlign: "left" }}>
-                Ubicación Fisica
-              </label>
-
-              <Select
-                className="input-form"
-                // value={tipo || undefined}
-                placeholder={"Ubicación Fisica"}
-                // onChange={(e) => setTipo(e)}
-                showSearch
-                style={{ flex: 2 }}
-                optionFilterProp="children"
-                filterOption={(input, option) =>
-                  (option?.label ?? "")
-                    .toLowerCase()
-                    .includes(input.toLowerCase())
-                }
-                allowClear
-                options={ubicacion?.map((item) => {
-                  return {
-                    value: item.COD_UBICAC,
-                    label: item.UBICAC_FISICA,
-                  };
-                })}
-              />
-            </div> */}
-            {/* <div style={{ display: "flex", alignItems: "center" }}>
-              <Select
-                className="input-form"
-                // value={tipo || undefined}
-                placeholder={"Por usuario"}
-                // onChange={(e) => setTipo(e)}
-                showSearch
-                style={{ flex: 2 }}
-                optionFilterProp="children"
-                filterOption={(input, option) =>
-                  (option?.label ?? "")
-                    .toLowerCase()
-                    .includes(input.toLowerCase())
-                }
-                allowClear
-                options={usuario?.map((item) => {
-                  return {
-                    value: item.EMPLEADO,
-                    label:
-                      item.APELLIDO_PATERNO +
-                      " " +
-                      item.APELLIDO_MATERNO +
-                      " " +
-                      item.NOMBRES,
-                  };
-                })}
-              />
-            </div> */}
-            {/* <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                width: "100%",
-              }}
-            >
-              <label htmlFor="" style={{ flex: 1, textAlign: "left" }}>
-                Familia
-              </label>
-
-              <Select
-                className="input-form"
-                // value={tipo || undefined}
-                placeholder={"Familia"}
-                // onChange={(e) => setTipo(e)}
-                showSearch
-                style={{ flex: 2 }}
-                optionFilterProp="children"
-                filterOption={(input, option) =>
-                  (option?.label ?? "")
-                    .toLowerCase()
-                    .includes(input.toLowerCase())
-                }
-                allowClear
-                options={[
-                  {
-                    value: "Access point",
-                    label: "Access point",
-                  },
-                  {
-                    value: "Disco Duro",
-                    label: "Disco Duro",
-                  },
-                ]}
-              />
-            </div> */}
             <div
               style={{
                 marginTop: "20px",
@@ -502,51 +342,6 @@ const Cargos = ({ setTitle }) => {
             </div>
           </div>
         </div>
-        {/* <div
-          style={{
-            width: "30%",
-            display: "flex",
-            flexDirection: "column",
-            padding: "5px",
-            gap: "5px",
-          }}
-        >
-          <Select
-            className="input-form"
-            // value={tipo || undefined}
-            placeholder={"Por secuencia"}
-            // onChange={(e) => setTipo(e)}
-            showSearch
-            style={{ width: "100%", flex: 3 }}
-            optionFilterProp="children"
-            filterOption={(input, option) =>
-              (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
-            }
-            allowClear
-            options={[
-              {
-                value: "Access point",
-                label: "Access point",
-              },
-              {
-                value: "Disco Duro",
-                label: "Disco Duro",
-              },
-            ]}
-          />
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <label htmlFor="" style={{ flex: 1, textAlign: "left" }}>
-              Desde
-            </label>
-            <Input style={{ flex: 2 }}></Input>
-          </div>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <label htmlFor="" style={{ flex: 1, textAlign: "left" }}>
-              Hasta
-            </label>
-            <Input style={{ flex: 2 }}></Input>
-          </div>
-        </div> */}
       </div>
       <Table columns={columns} dataSource={asignaciones} />
       {isModalOpen && (

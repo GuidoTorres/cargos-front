@@ -40,9 +40,9 @@ const BarCode = ({ values }) => {
             value={value.codigo_activo}
             width={1.25}
             height={18}
-            fontSize={10}
+            fontSize={12}
             marginTop={3}
-            marginBottom={3}
+            marginBottom={2}
             
             
           />

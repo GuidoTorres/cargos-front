@@ -24,10 +24,9 @@ const BarCode = ({ values }) => {
                 style={{ height: "20px" }}
               />
             </div>
-            <div style={{ fontSize: "5px" }}>
-              <p>AUTORIDAD AUTONOMA DE MAJES</p>
+            <div style={{ fontSize: "5px", fontWeight:"bold" }}>
+              <p>AUTODEMA</p>
               <p>OFICINA DE CONTROL Y SANEAMIENTO PATRIMONIAL - 2024</p>
-              <hr />
             </div>
             <div>
               <img
@@ -40,13 +39,14 @@ const BarCode = ({ values }) => {
           <Barcode
             value={value.codigo_activo}
             width={1.25}
-            height={20}
-            fontSize={12}
-            marginTop={1}
+            height={18}
+            fontSize={10}
+            marginTop={3}
             marginBottom={5}
             
+            
           />
-          <p style={{fontSize:"8px"}}>{value.descripcion}</p>
+          <p style={{fontSize:"7px", fontWeight:"bold"}}>{value.descripcion}</p>
         </div>
       ))}
     </>

@@ -16,7 +16,6 @@ const BarCode = ({ values }) => {
             textAlign: "center",
             marginBottom: "2mm",
             boxSizing: "border-box",
-            border: "1px solid red",
             padding: "0.2mm"
           }}
         >
@@ -40,9 +39,8 @@ const BarCode = ({ values }) => {
                 textAlign:"center"
               }}
             >
-            <p style={{ margin: 0, width:"100%" }}>PEIMS - AUTODEMA - PATRIMONIO</p>
-            
-            <hr style={{border:"0.3px solid black", marginTop:"2px"}}/>
+            <p style={{ margin: 0, width:"100%", letterSpacing:"0.4px" }}>PEIMS - AUTODEMA - PATRIMONIO</p>
+            <div style={{border:"0.2px solid black", marginTop:"2px", borderTop:0}}></div>
             {/* <p style={{ margin: 0, width:"100%" }}>AUTODEMA - PATRIMONIO</p> */}
 
             </div>

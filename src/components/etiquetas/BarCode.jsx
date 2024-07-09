@@ -24,7 +24,7 @@ const BarCode = ({ values }) => {
                 style={{ height: "20px" }}
               />
             </div>
-            <div style={{ fontSize: "7px", fontWeight:"bold", fontFamily:"Roboto" }}>
+            <div style={{ fontSize: "7.5px", fontFamily:"Helvetica" }}>
               {/* <p>AUTODEMA</p> */}
               <p>OFICINA DE CONTROL Y SANEAMIENTO PATRIMONIAL - 2024</p>
             </div>
@@ -46,7 +46,7 @@ const BarCode = ({ values }) => {
             
             
           />
-          <p style={{fontSize:"7px", fontWeight:"bold", fontFamily:"Roboto"}}>{value.descripcion}</p>
+          <p style={{fontSize:"8px", fontFamily:"Helvetica"}}>{value.descripcion}</p>
         </div>
       ))}
     </>

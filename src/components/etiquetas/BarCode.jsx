@@ -55,7 +55,7 @@ const BarCode = ({ values }) => {
             width={1.25}
             height={25}
             fontSize={12}
-            marginTop={3}
+            marginTop={2}
             marginBottom={2}
           />
           <p style={{ fontSize: "8px", fontFamily: "Helvetica", margin: 0 }}>

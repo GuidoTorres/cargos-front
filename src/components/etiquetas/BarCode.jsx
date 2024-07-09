@@ -38,7 +38,7 @@ const BarCode = ({ values }) => {
           </div>
           <Barcode
             value={value.codigo_activo}
-            width={1.5}
+            width={1}
             height={20}
             fontSize={10}
             marginTop={1}

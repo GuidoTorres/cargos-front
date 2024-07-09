@@ -211,8 +211,8 @@ const Adeudo = ({ setTitle }) => {
               style={{ width: "100%" }}
               options={trabajadores.map((item) => {
                 return {
-                  value: item.AP_PATE + " " + item.DE_NOMB,
-                  label: item.AP_PATE + " " + item.DE_NOMB,
+                  value: item.AP_MATE +" "+ item.AP_PATE + " " + item.DE_NOMB,
+                  label: item.AP_MATE +" "+ item.AP_PATE + " " + item.DE_NOMB,
                 };
               })}
               placeholder="Encargado"

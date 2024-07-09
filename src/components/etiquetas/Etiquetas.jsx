@@ -38,7 +38,7 @@ const Etiquetas = ({ setTitle }) => {
   }, [filtros]);
 
   const getSedes = async (docData) => {
-    const response = await fetch(`http://localhost:3001/api/v1/sedes`);
+    const response = await fetch(`http://10.30.1.42:8084/api/v1/sedes`);
     const info = await response.json();
     if (info) {
       setSedes(info.data);
@@ -46,7 +46,7 @@ const Etiquetas = ({ setTitle }) => {
     return info.data;
   };
   const getUsuario = async (docData) => {
-    const response = await fetch(`http://localhost:3001/api/v1/usuario`);
+    const response = await fetch(`http://10.30.1.42:8084/api/v1/usuario`);
     const info = await response.json();
     if (info) {
       setUsuario(info.data);
@@ -56,7 +56,7 @@ const Etiquetas = ({ setTitle }) => {
 
   const getCentroCosto = async (docData) => {
     const response = await fetch(
-      `http://localhost:3001/api/v1/centro_costo/all`
+      `http://10.30.1.42:8084/api/v1/centro_costo/all`
     );
     const info = await response.json();
     if (info) {
@@ -65,7 +65,7 @@ const Etiquetas = ({ setTitle }) => {
     return info.data;
   };
   const getUbicacion = async (docData) => {
-    const response = await fetch(`http://localhost:3001/api/v1/ubicacion`);
+    const response = await fetch(`http://10.30.1.42:8084/api/v1/ubicacion`);
     const info = await response.json();
     if (info) {
       setUbicacion(info.data);
@@ -84,7 +84,7 @@ const Etiquetas = ({ setTitle }) => {
 
     const queryParams = new URLSearchParams(params).toString();
     const response = await fetch(
-      `http://localhost:3001/api/v1/adeudo/etiqueta?${queryParams}`
+      `http://10.30.1.42:8084/api/v1/adeudo/etiqueta?${queryParams}`
     );
     const info = await response.json();
     if (info) {

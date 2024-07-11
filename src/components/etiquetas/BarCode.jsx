@@ -37,7 +37,7 @@ const BarCode = ({ values }) => {
             <div
               style={{
                 fontSize: "8px",
-                fontFamily: "Helvetica",
+                fontFamily: "Roboto",
                 lineHeight: "1",
                 flex: 8,
                 textAlign: "center",
@@ -66,12 +66,13 @@ const BarCode = ({ values }) => {
           <Barcode
             value={value.codigo_activo}
             width={1.25}
-            height={25}
-            fontSize={12}
+            height={20}
+            fontSize={14}
             marginTop={0.3}
-            marginBottom={0.1}
+            marginBottom={0.3}
+            font="Libre Barcode 128"
           />
-          <p style={{overflow:"hidden", border:"1px solid red", fontSize: "7.5px",  margin: 0, textRendering: "optimizeLegibility", height:"20px" }}>
+          <p style={{overflow:"hidden", fontFamily:"Roboto", fontSize: "8px",  margin: 0, textRendering: "optimizeLegibility", height:"19.5px" }}>
             {value.descripcion}
           </p>
         </div>

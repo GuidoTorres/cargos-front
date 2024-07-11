@@ -68,10 +68,10 @@ const BarCode = ({ values }) => {
             width={1.25}
             height={25}
             fontSize={12}
-            marginTop={0.5}
-            marginBottom={0.5}
+            marginTop={0.3}
+            marginBottom={0.1}
           />
-          <p style={{overflow:"hidden", fontSize: "7.5px",  margin: 0, textRendering: "optimizeLegibility", height:"19px" }}>
+          <p style={{overflow:"hidden", border:"1px solid red", fontSize: "7.5px",  margin: 0, textRendering: "optimizeLegibility", height:"20px" }}>
             {value.descripcion}
           </p>
         </div>

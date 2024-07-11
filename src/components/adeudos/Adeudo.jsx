@@ -18,6 +18,9 @@ const formatDate = () => {
 };
 const Adeudo = ({ setTitle }) => {
   const componentRef = useRef();
+  const textRef = useRef();
+const [lineWidth, setLineWidth] = useState("100%");
+
   useEffect(() => {
     setTitle("Adeudos");
   }, []);
@@ -32,10 +35,18 @@ const Adeudo = ({ setTitle }) => {
     adeudo: "",
     modalidad: "",
     fecha: "",
+    encargado_tipo: "",
     encargado: "",
   });
   const [trabajadores, setTrabajadores] = useState([]);
   const [planilla, setPlanilla] = useState();
+
+  console.log(lineWidth);
+  useEffect(() => {
+    if (textRef.current) {
+      setLineWidth(`${textRef.current.offsetWidth}px`);
+    }
+  }, [data]);
 
   const getTrabajadores = async () => {
     const response = await fetch(`http://localhost:3001/api/v1/planilla`);
@@ -207,25 +218,35 @@ const Adeudo = ({ setTitle }) => {
             >
               Encargado
             </p>
-            <Select
-              style={{ width: "100%" }}
-              options={trabajadores.map((item) => {
-                return {
-                  value: item.AP_MATE +" "+ item.AP_PATE + " " + item.DE_NOMB,
-                  label: item.AP_MATE +" "+ item.AP_PATE + " " + item.DE_NOMB,
-                };
-              })}
-              placeholder="Encargado"
-              onChange={(e) => setData((data) => ({ ...data, encargado: e }))}
-              showSearch
-              optionFilterProp="children"
-              filterOption={(input, option) =>
-                (option?.label ?? "")
-                  .toLowerCase()
-                  .includes(input.toLowerCase())
-              }
-              allowClear
-            ></Select>
+            <div style={{ display: "flex", gap: "2px" }}>
+              <Input
+                style={{ width: "20%" }}
+                onChange={(e) =>
+                  setData((data) => ({ ...data, encargado_tipo: e.target.value }))
+                }
+              />
+              <Select
+                style={{ width: "80%" }}
+                options={trabajadores.map((item) => {
+                  return {
+                    value:
+                      item.AP_MATE + " " + item.AP_PATE + " " + item.DE_NOMB,
+                    label:
+                      item.AP_MATE + " " + item.AP_PATE + " " + item.DE_NOMB,
+                  };
+                })}
+                placeholder="Encargado"
+                onChange={(e) => setData((data) => ({ ...data, encargado: e }))}
+                showSearch
+                optionFilterProp="children"
+                filterOption={(input, option) =>
+                  (option?.label ?? "")
+                    .toLowerCase()
+                    .includes(input.toLowerCase())
+                }
+                allowClear
+              ></Select>
+            </div>
           </div>
         </div>
         <div
@@ -364,11 +385,11 @@ const Adeudo = ({ setTitle }) => {
             >
               Revisado, Verificado y Elaborado Por:
             </p>
-            <p style={{ textAlign: "left", marginTop: "80px", width: "100%" }}>
+            <p style={{ textAlign: "left", marginTop: "80px", width: lineWidth }}>
               ___________________________
             </p>
-            <p style={{ textAlign: "left", marginTop: "5px", width: "100%" }}>
-              C.P.C J. {data?.encargado}
+            <p ref={textRef} style={{ textAlign: "left", marginTop: "5px", width: "100%" }}>
+              {data?.encargado_tipo} {data?.encargado}
             </p>
           </div>
         </div>

@@ -398,7 +398,7 @@ const CargoPersonal = ({ data, docData, centroCosto, ubicacion }) => {
                     height: "25px",
                   }}
                 >
-                  <Text style={styles.tableCell}>Medidas</Text>
+                  <Text style={styles.tableCell}>O/C</Text>
                 </View>
                 <View
                   style={{
@@ -524,7 +524,7 @@ const CargoPersonal = ({ data, docData, centroCosto, ubicacion }) => {
                     }}
                   >
                     <Text style={{ ...styles.tableCell, fontSize: 8 }}>
-                      {item?.medidad}
+                      {item?.nro_orden}
                     </Text>
                   </View>
                   <View

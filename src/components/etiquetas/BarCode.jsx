@@ -71,7 +71,7 @@ const BarCode = ({ values }) => {
             marginTop={0.5}
             marginBottom={0.5}
           />
-          <p style={{ fontSize: "8px", fontFamily: "Helvetica", margin: 0, textRendering: "optimizeLegibility" }}>
+          <p style={{overflow:"hidden", fontSize: "8px", fontFamily: "Helvetica", margin: 0, textRendering: "optimizeLegibility", height:"18.5px" }}>
             {value.descripcion}
           </p>
         </div>

@@ -37,7 +37,7 @@ const BarCode = ({ values }) => {
             <div
               style={{
                 fontSize: "8px",
-                fontFamily: "Arial",
+                fontFamily: "Helvetica",
                 lineHeight: "1",
                 flex: 8,
                 textAlign: "center",

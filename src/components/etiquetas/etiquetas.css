@@ -2,8 +2,10 @@
     display: flex;
     flex-direction: column;
     background-color: white;
-    padding: 5px;
+    padding: 10px;
     margin-top: -30px;
+    border-radius: 5px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 .filters{
     display: flex;
@@ -29,18 +31,30 @@
     border: 1px solid lightgrey;
     padding: 10px;
     border-radius: 6px;
-    
-}
-.filters-right div{
     display: flex;
+    flex-direction: row;
+    padding: 5px;
+    gap: 5px;
+    
     
 }
-.filters-right div label{
-    width: 20%;
+.filters-right .filters{
+    flex: 1;
+    border: 1px solid lightgray;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    padding: 5px;
+    
+}
+
+.filters-right .filters div {
+    width: 100%;
     text-align: left;
 }
 .search{
     display: flex;
     margin-top: 10px;
     margin-bottom: 10px;
+    gap: 5px;
 }

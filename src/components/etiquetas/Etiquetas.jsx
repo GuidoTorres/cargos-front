@@ -1,4 +1,4 @@
-import { Input, Select, Table, Button, InputNumber, DatePicker } from "antd";
+import { Input, Select, Table, Button, InputNumber, DatePicker, notification } from "antd";
 import React, { useEffect, useState, useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 import { PrinterOutlined } from "@ant-design/icons";
@@ -23,6 +23,10 @@ const Etiquetas = ({ setTitle }) => {
     endSeq: "",
     startSeq: "",
     anio: "2024",
+    startCodigoActivo: "",
+    endCodigoActivo: "",
+    endCodigoActivo: "",
+    desc: "",
   });
 
   useEffect(() => {
@@ -82,9 +86,11 @@ const Etiquetas = ({ setTitle }) => {
       }
     }
 
+    
     const queryParams = new URLSearchParams(params).toString();
+    console.log(queryParams);
     const response = await fetch(
-      `http://10.30.1.42:8084/api/v1/adeudo/etiqueta?${queryParams}`
+      `http://10.30.1.42:8084/api/v1/etiqueta?${queryParams}`
     );
     const info = await response.json();
     if (info) {
@@ -140,16 +146,21 @@ const Etiquetas = ({ setTitle }) => {
     }
   }, [barCode, printTrigger]);
 
-
-
   const handleBarcodePrint = (record) => {
     setBarcode([record]);
     setPrintTrigger(true);
   };
 
   const handleMultiBarcodePrint = () => {
-    setBarcode(data);
-    setPrintTrigger(true);
+    if(data.length <= 100 ){
+      setBarcode(data);
+      setPrintTrigger(true);
+
+    }else{
+      notification.error({
+        message: "Solo es posible imprimir 100 etiquetas a la vez.",
+      });
+    }
   };
 
   console.log(filtros);
@@ -162,7 +173,7 @@ const Etiquetas = ({ setTitle }) => {
             <label htmlFor="">Año</label>
             <DatePicker
               placeholder="Selecione un año"
-              style={{ width:"400px" }}
+              style={{ width: "400px" }}
               onChange={(e) => setFiltros((value) => ({ ...value, anio: e }))}
               picker="year"
             />
@@ -175,12 +186,11 @@ const Etiquetas = ({ setTitle }) => {
             <label htmlFor="">Sede</label>
             <Select
               className="input-form"
-              
               value={filtros.sede || undefined}
               placeholder={"Sede"}
               onChange={(e) => setFiltros((value) => ({ ...value, sede: e }))}
               showSearch
-              style={{ width:"400px" }}
+              style={{ width: "400px" }}
               optionFilterProp="children"
               filterOption={(input, option) =>
                 (option?.label ?? "")
@@ -207,7 +217,7 @@ const Etiquetas = ({ setTitle }) => {
                 setFiltros((value) => ({ ...value, centroCosto: e }))
               }
               showSearch
-              style={{ width:"400px" }}
+              style={{ width: "400px" }}
               optionFilterProp="children"
               filterOption={(input, option) =>
                 (option?.label ?? "")
@@ -216,7 +226,6 @@ const Etiquetas = ({ setTitle }) => {
               }
               allowClear
               popupMatchSelectWidth={false}
-
               options={centroCosto.map((item) => {
                 return {
                   value: item.centro_costo,
@@ -235,7 +244,7 @@ const Etiquetas = ({ setTitle }) => {
                 setFiltros((value) => ({ ...value, ubicacion: e }))
               }
               showSearch
-              style={{ width:"400px" }}
+              style={{ width: "400px" }}
               optionFilterProp="children"
               filterOption={(input, option) =>
                 (option?.label ?? "")
@@ -244,7 +253,6 @@ const Etiquetas = ({ setTitle }) => {
               }
               allowClear
               popupMatchSelectWidth={false}
-
               options={ubicacion.map((item) => {
                 return {
                   value: item.cod_ubicac,
@@ -263,7 +271,7 @@ const Etiquetas = ({ setTitle }) => {
                 setFiltros((value) => ({ ...value, usuario: e }))
               }
               showSearch
-              style={{ width:"400px" }}
+              style={{ width: "400px" }}
               optionFilterProp="children"
               filterOption={(input, option) =>
                 (option?.label ?? "")
@@ -272,7 +280,6 @@ const Etiquetas = ({ setTitle }) => {
               }
               allowClear
               popupMatchSelectWidth={false}
-
               options={usuario.map((item) => {
                 return {
                   value: item.EMPLEADO,
@@ -288,41 +295,68 @@ const Etiquetas = ({ setTitle }) => {
           </div>
           <div className="inputs">
             <label htmlFor="">Familia</label>
-            <Select               style={{ width:"400px" }}
-/>
+            <Select style={{ width: "400px" }} />
           </div>
         </section>
 
         <section className="filters-right">
-          {/* <Select
-            style={{ width: "200px" }}
-            options={[
-              { value: 0, label: "Ninguno" },
-              { value: 1, label: "Por Secuencia" },
-              { value: 2, label: "Por Código Patrimonial" },
-            ]}
-          /> */}
-          <label htmlFor="">Por Secuencia</label>
-          <div>
-            <label htmlFor="">Desde</label>
-            <InputNumber
-              min={1}
-              onChange={(e) =>
-                setFiltros((value) => ({ ...value, startSeq: e }))
-              }
-            />
+          <div className="filters">
+            <label htmlFor="">Por Secuencia</label>
+            <div>
+              <label htmlFor="">Desde</label>
+              <InputNumber
+                min={1}
+
+                onChange={(e) =>
+                  setFiltros((value) => ({ ...value, startSeq: e }))
+                }
+                controls={false}
+              />
+            </div>
+            <div style={{ marginTop: "10px" }}>
+              <label htmlFor="">Hasta</label>
+              <InputNumber
+                min={1}
+                onChange={(e) =>
+                  setFiltros((value) => ({ ...value, endSeq: e }))
+                }
+                controls={false}
+              />
+            </div>
           </div>
-          <div style={{marginTop:"10px"}}>
-            <label htmlFor="">Hasta</label>
-            <InputNumber
-              min={1}
-              onChange={(e) => setFiltros((value) => ({ ...value, endSeq: e }))}
-            />
+          <div className="filters">
+            <label htmlFor="">Por Código Patrimonial</label>
+            <div>
+              <label htmlFor="">Desde</label>
+              <InputNumber
+                min={1}
+
+                onChange={(e) =>
+                  setFiltros((value) => ({ ...value, startCodigoActivo: e }))
+                }
+                controls={false}
+              />
+            </div>
+            <div style={{ marginTop: "10px" }}>
+              <label htmlFor="">Hasta</label>
+              <InputNumber
+                min={1}
+                onChange={(e) =>
+                  setFiltros((value) => ({ ...value, endCodigoActivo: e }))
+                }
+                controls={false}
+
+              />
+            </div>
           </div>
         </section>
       </div>
       <section className="search">
-        <Search placeholder="Buscar" style={{ width: "300px" }} />
+        <Search
+          placeholder="Buscar"
+          style={{ width: "300px" }}
+          onChange={(e) => setFiltros((value) => ({ ...value, desc: e.target.value }))}
+        />
         <Button onClick={(e) => handleMultiBarcodePrint()}>
           Imprimir Varios
         </Button>
@@ -331,11 +365,10 @@ const Etiquetas = ({ setTitle }) => {
       <section className="table">
         <Table columns={columns} dataSource={data} />
       </section>
-      {/* <div style={{display:"none"}}> */}
-
-      <div ref={barcodeRef}>
-        <BarCode values={barCode} />
-      {/* </div> */}
+      <div style={{ display: "none" }}>
+        <div ref={barcodeRef}>
+          <BarCode values={barCode} />
+        </div>
       </div>
     </div>
   );

@@ -18,6 +18,8 @@ import { InventarioContext } from "../context/InventarioContext";
 import { ProtectedRoute } from "../routes/ProtectedRoute";
 import Adeudo from "../components/adeudos/Adeudo";
 import Etiquetas from "../components/etiquetas/Etiquetas";
+import OpcionAdeudo from "../components/adeudos/OpcionAdeudo";
+import HistorialAdeudo from "../components/adeudos/HistorialAdeudo";
 const { Sider, Header, Content } = Layout;
 
 const MainPage = () => {
@@ -84,10 +86,27 @@ const MainPage = () => {
                   path="/adeudo"
                   element={
                     <ProtectedRoute>
+                      <OpcionAdeudo setTitle={setTitle} />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/adeudo/historial"
+                  element={
+                    <ProtectedRoute>
+                      <HistorialAdeudo setTitle={setTitle} />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/adeudo/crear"
+                  element={
+                    <ProtectedRoute>
                       <Adeudo setTitle={setTitle} />
                     </ProtectedRoute>
                   }
                 />
+
                 <Route
                   path="/etiquetas"
                   element={

@@ -1,0 +1,31 @@
+.opcion-menu {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+.opcion-menu div {
+  height: 300px;
+  width: 350px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.opcion-menu div label {
+  margin-top: 15px;
+  font-size: 15px;
+  font-weight: bold;
+}
+.opcion-menu .menu {
+  border-radius: 50%;
+  height: 250px;
+  width: 250px;
+  background-color: white;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}

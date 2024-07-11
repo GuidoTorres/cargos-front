@@ -16,7 +16,7 @@ const BarCode = ({ values }) => {
             textAlign: "center",
             marginBottom: "2mm",
             boxSizing: "border-box",
-            padding: "0.2mm"
+            padding: "0.2mm",
           }}
         >
           <div
@@ -27,8 +27,12 @@ const BarCode = ({ values }) => {
               gap: "2px",
             }}
           >
-            <div style={{flex:1}}>
-              <img src={image1} alt="Custom Logo" style={{ height: "15px" }} />
+            <div style={{ flex: 1 }}>
+              <img
+                src={image1}
+                alt="Custom Logo"
+                style={{ height: "15px", imageRendering: "crisp-edges" }}
+              />
             </div>
             <div
               style={{
@@ -36,16 +40,27 @@ const BarCode = ({ values }) => {
                 fontFamily: "Helvetica",
                 lineHeight: "1",
                 flex: 8,
-                textAlign:"center"
+                textAlign: "center",
               }}
             >
-            <p style={{ margin: 0, width:"100%", letterSpacing:"0.4px" }}>PEIMS - AUTODEMA - PATRIMONIO</p>
-            <div style={{border:"0.2px solid black", marginTop:"2px", borderTop:0}}></div>
-            {/* <p style={{ margin: 0, width:"100%" }}>AUTODEMA - PATRIMONIO</p> */}
-
+              <p style={{ margin: 0, width: "100%", letterSpacing: "0.4px",textRendering: "optimizeLegibility" }}>
+                PEIMS - AUTODEMA - PATRIMONIO
+              </p>
+              <div
+                style={{
+                  border: "0.2px solid black",
+                  marginTop: "2px",
+                  borderTop: 0,
+                }}
+              ></div>
+              {/* <p style={{ margin: 0, width:"100%" }}>AUTODEMA - PATRIMONIO</p> */}
             </div>
-            <div style={{flex:1}}>
-              <img src={image} alt="Custom Logo" style={{ height: "15px" }} />
+            <div style={{ flex: 1 }}>
+              <img
+                src={image}
+                alt="Custom Logo"
+                style={{ height: "15px", imageRendering: "crisp-edges" }}
+              />
             </div>
           </div>
           <Barcode
@@ -56,7 +71,7 @@ const BarCode = ({ values }) => {
             marginTop={0.5}
             marginBottom={0.5}
           />
-          <p style={{ fontSize: "8px", fontFamily: "Helvetica", margin: 0 }}>
+          <p style={{ fontSize: "8px", fontFamily: "Helvetica", margin: 0, textRendering: "optimizeLegibility" }}>
             {value.descripcion}
           </p>
         </div>

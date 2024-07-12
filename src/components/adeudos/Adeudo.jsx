@@ -30,11 +30,11 @@ const [lineWidth, setLineWidth] = useState("100%");
   });
   const [data, setData] = useState({
     trabajador: "",
-    anio: "",
-    contenido: "",
+    nombre_anio: '"AÑO DEL BICENTENARIO DE LAS BATALLAS HEROICAS DE AYACUCHO Y JUNIN"',
+    contenido: "al término de su contrato con fecha",
     adeudo: "",
     modalidad: "",
-    fecha: "",
+    fecha: dayjs().format("DD-MM-YYYY"),
     encargado_tipo: "",
     encargado: "",
   });
@@ -67,6 +67,21 @@ const [lineWidth, setLineWidth] = useState("100%");
     setPlanilla(filter);
   }, [trabajadores]);
 
+
+  const postAdeudo = async() =>{
+    const response = await fetch(
+      `http://localhost:3001/api/v1/adeudo`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+      }
+    );
+    const confirm = await response.json();
+  }
+
   const adeudo = [
     { label: "ADEUDA", value: "ADEUDA" },
     { label: "NO ADEUDA", value: "NO ADEUDA" },
@@ -91,7 +106,7 @@ const [lineWidth, setLineWidth] = useState("100%");
             <TextArea
               rows={2}
               onChange={(e) =>
-                setData((data) => ({ ...data, anio: e.target.value }))
+                setData((data) => ({ ...data, nombre_anio: e.target.value }))
               }
               placeholder="AÑO DEL BICENTENARIO DE LAS BATALLAS HEROICAS DE AYACUCHO Y JUNIN"
             />
@@ -396,7 +411,7 @@ const [lineWidth, setLineWidth] = useState("100%");
       </div>
       <section className="buttons">
         <div>
-          <Button type="primary">Guardar</Button>
+          <Button type="primary" onClick={() => postAdeudo}>Guardar</Button>
           <Button onClick={handlePrint}>Imprimir</Button>
         </div>
       </section>

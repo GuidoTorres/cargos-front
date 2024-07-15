@@ -17,6 +17,7 @@ const BarCode = ({ values }) => {
             marginBottom: "2mm",
             boxSizing: "border-box",
             padding: "0.2mm",
+            border: "1px solid red"
           }}
         >
           <div
@@ -91,7 +92,7 @@ const BarCode = ({ values }) => {
               width={1.25}
               height={20}
               fontSize={10}
-              marginTop={0.3}
+              marginTop={8}
               marginBottom={0.3}
               font="Libre Barcode 128"
             />
@@ -112,6 +113,7 @@ const BarCode = ({ values }) => {
               fontFamily: "Helvetica",
               fontSize: "8px",
               margin: 0,
+              marginTop:"5px",
               textRendering: "optimizeLegibility",
               height: "19.5px",
             }}

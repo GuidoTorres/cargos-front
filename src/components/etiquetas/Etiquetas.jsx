@@ -364,10 +364,10 @@ const Etiquetas = ({ setTitle }) => {
       <section className="table">
         <Table columns={columns} dataSource={data} />
       </section>
-      <div style={{ display: "none" }}>
+      {/* <div style={{ display: "none" }}> */}
         <div ref={barcodeRef}>
           <BarCode values={barCode} />
-        </div>
+        {/* </div> */}
       </div>
     </div>
   );

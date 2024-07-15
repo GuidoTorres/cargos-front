@@ -81,10 +81,11 @@ const BarCode = ({ values }) => {
             <div
               style={{
                 transform: "rotate(-90deg)",
-                fontSize: "6px",
+                fontSize: "7px",
                 marginLeft: "-5px",
                 paddingLeft: "0",
-                border: "1px solid red"
+                marginTop:"-2px"
+
               }}
             >
               <label>{`O/C`+ " "+value.nro_orden}</label>
@@ -96,17 +97,16 @@ const BarCode = ({ values }) => {
               height={20}
               fontSize={10}
               marginTop={4}
-              marginBottom={2}
+              marginBottom={3}
               marginLeft={-1}
-              font="Libre Barcode 128"
             />
             <div>
               <p
                 style={{
                   transform: "rotate(90deg)",
-                  fontSize: "6px",
+                  fontSize: "7px",
                   marginRight: "-2px",
-
+                  marginTop:"-8px"
                 }}
               >
                 {new Date().getFullYear()}

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "./adeudo.css";
 import image from "../../assets/logo_autodema.png";
 import gobierno from "../../assets/gobierno.png";
-import { Select, Input, Image, Button, DatePicker } from "antd";
+import { Select, Input, Image, Button, DatePicker, notification } from "antd";
 import { useReactToPrint } from "react-to-print";
 import dayjs from "dayjs";
 import "dayjs/locale/es";
@@ -19,7 +19,7 @@ const formatDate = () => {
 const Adeudo = ({ setTitle }) => {
   const componentRef = useRef();
   const textRef = useRef();
-const [lineWidth, setLineWidth] = useState("100%");
+  const [lineWidth, setLineWidth] = useState("100%");
 
   useEffect(() => {
     setTitle("Adeudos");
@@ -28,25 +28,28 @@ const [lineWidth, setLineWidth] = useState("100%");
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
+  const [trabajadores, setTrabajadores] = useState([]);
+  const [planilla, setPlanilla] = useState();
+
   const [data, setData] = useState({
     trabajador: "",
-    nombre_anio: '"AÑO DEL BICENTENARIO DE LAS BATALLAS HEROICAS DE AYACUCHO Y JUNIN"',
+    nombre_anio:
+      '"AÑO DEL BICENTENARIO DE LAS BATALLAS HEROICAS DE AYACUCHO Y JUNIN"',
     contenido: "al término de su contrato con fecha",
     adeudo: "",
     modalidad: "",
     fecha: dayjs().format("DD-MM-YYYY"),
-    encargado_tipo: "",
+    tipo_encargado: "",
     encargado: "",
+    fecha_texto: formatDate(),
+    jefe: "",
   });
-  const [trabajadores, setTrabajadores] = useState([]);
-  const [planilla, setPlanilla] = useState();
 
-  console.log(lineWidth);
   useEffect(() => {
     if (textRef.current) {
       setLineWidth(`${textRef.current.offsetWidth}px`);
     }
-  }, [data]);
+  }, [data.encargado, data.tipo_encargado]);
 
   const getTrabajadores = async () => {
     const response = await fetch(`http://localhost:3001/api/v1/planilla`);
@@ -67,20 +70,34 @@ const [lineWidth, setLineWidth] = useState("100%");
     setPlanilla(filter);
   }, [trabajadores]);
 
-
-  const postAdeudo = async() =>{
-    const response = await fetch(
-      `http://localhost:3001/api/v1/adeudo`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data)
-      }
-    );
+  const postAdeudo = async () => {
+    const format = {
+      ...data,
+      jefe:
+        planilla?.at(-1)?.DE_NOMB +
+          " " +
+          planilla?.at(-1)?.AP_PATE +
+          " " +
+          planilla?.at(-1)?.AP_MATE || "",
+    };
+    const response = await fetch(`http://localhost:3001/api/v1/adeudos`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(format),
+    });
     const confirm = await response.json();
-  }
+    if (response.status === 201) {
+      notification.success({
+        message: confirm.msg,
+      });
+    } else {
+      notification.error({
+        message: confirm.msg,
+      });
+    }
+  };
 
   const adeudo = [
     { label: "ADEUDA", value: "ADEUDA" },
@@ -237,7 +254,10 @@ const [lineWidth, setLineWidth] = useState("100%");
               <Input
                 style={{ width: "20%" }}
                 onChange={(e) =>
-                  setData((data) => ({ ...data, encargado_tipo: e.target.value }))
+                  setData((data) => ({
+                    ...data,
+                    tipo_encargado: e.target.value,
+                  }))
                 }
               />
               <Select
@@ -245,9 +265,9 @@ const [lineWidth, setLineWidth] = useState("100%");
                 options={trabajadores.map((item) => {
                   return {
                     value:
-                      item.AP_MATE + " " + item.AP_PATE + " " + item.DE_NOMB,
+                    item.DE_NOMB + " " + item.AP_PATE + " " + item.AP_MATE,
                     label:
-                      item.AP_MATE + " " + item.AP_PATE + " " + item.DE_NOMB,
+                      item.DE_NOMB + " " + item.AP_PATE + " " + item.AP_MATE,
                   };
                 })}
                 placeholder="Encargado"
@@ -272,7 +292,6 @@ const [lineWidth, setLineWidth] = useState("100%");
             padding: "10mm", // Padding for content
             boxSizing: "border-box",
             width: "600px",
-            border: "1px solid lightgray",
           }}
           ref={componentRef}
         >
@@ -324,7 +343,7 @@ const [lineWidth, setLineWidth] = useState("100%");
                 Hace constar:
               </p>
               <p style={{ textAlign: "justify", marginTop: "15px" }}>
-                Que el Sr. (a,ta):{" "}
+                Que el Sr. (a,ta):
                 <strong>
                   {data.trabajador ? data.trabajador : "_______________"}
                 </strong>
@@ -351,7 +370,7 @@ const [lineWidth, setLineWidth] = useState("100%");
               </p>
 
               <p style={{ textAlign: "justify", marginTop: "15px" }}>
-                Se expide la presente a solicitud del interesado, para los fines
+                Se expide la presente solicitud del interesado, para los fines
                 que estime convenientes.
               </p>
 
@@ -375,7 +394,7 @@ const [lineWidth, setLineWidth] = useState("100%");
                   textTransform: "capitalize",
                 }}
               >
-                Lic.{" "}
+                LIC.{" "}
                 {planilla?.at(-1)?.DE_NOMB +
                   " " +
                   planilla?.at(-1)?.AP_PATE +
@@ -400,18 +419,25 @@ const [lineWidth, setLineWidth] = useState("100%");
             >
               Revisado, Verificado y Elaborado Por:
             </p>
-            <p style={{ textAlign: "left", marginTop: "80px", width: lineWidth }}>
+            <p
+              style={{ textAlign: "left", marginTop: "80px", width: lineWidth }}
+            >
               ___________________________
             </p>
-            <p ref={textRef} style={{ textAlign: "left", marginTop: "5px", width: "100%" }}>
-              {data?.encargado_tipo} {data?.encargado}
+            <p
+              ref={textRef}
+              style={{ textAlign: "left", marginTop: "5px", width: "100%" }}
+            >
+              {data?.tipo_encargado} {data?.encargado}
             </p>
           </div>
         </div>
       </div>
       <section className="buttons">
         <div>
-          <Button type="primary" onClick={() => postAdeudo}>Guardar</Button>
+          <Button type="primary" onClick={postAdeudo}>
+            Guardar
+          </Button>
           <Button onClick={handlePrint}>Imprimir</Button>
         </div>
       </section>

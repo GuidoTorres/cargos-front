@@ -79,7 +79,6 @@ const Etiquetas = ({ setTitle }) => {
   const getEtiquetas = async () => {
     const params = {};
 
-    // Agrega solo los parámetros que tienen valores
     for (const key in filtros) {
       if (filtros[key]) {
         params[key] = filtros[key];
@@ -365,11 +364,11 @@ const Etiquetas = ({ setTitle }) => {
       <section className="table">
         <Table columns={columns} dataSource={data} />
       </section>
-      <div style={{ display: "none" }}>
+      {/* <div style={{ display: "none" }}> */}
         <div ref={barcodeRef}>
           <BarCode values={barCode} />
         </div>
-      </div>
+      {/* </div> */}
     </div>
   );
 };

@@ -43,7 +43,14 @@ const BarCode = ({ values }) => {
                 textAlign: "center",
               }}
             >
-              <p style={{ margin: 0, width: "100%", letterSpacing: "0.4px",textRendering: "optimizeLegibility" }}>
+              <p
+                style={{
+                  margin: 0,
+                  width: "100%",
+                  letterSpacing: "0.4px",
+                  textRendering: "optimizeLegibility",
+                }}
+              >
                 PEIMS - AUTODEMA - PATRIMONIO
               </p>
               <div
@@ -63,16 +70,52 @@ const BarCode = ({ values }) => {
               />
             </div>
           </div>
-          <Barcode
-            value={value.codigo_activo}
-            width={1.25}
-            height={20}
-            fontSize={14}
-            marginTop={0.3}
-            marginBottom={0.3}
-            font="Libre Barcode 128"
-          />
-          <p style={{overflow:"hidden", fontFamily:"Helvetica", fontSize: "8px",  margin: 0, textRendering: "optimizeLegibility", height:"19.5px" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <div
+              style={{
+                transform: "rotate(-90deg)",
+                fontSize: "6px",
+              }}
+            >
+              <label>{`O/C`+ " "+value.nro_orden}</label>
+            </div>
+
+            <Barcode
+              value={value.codigo_activo}
+              width={1.25}
+              height={20}
+              fontSize={10}
+              marginTop={0.3}
+              marginBottom={0.3}
+              font="Libre Barcode 128"
+            />
+            <div>
+              <p
+                style={{
+                  transform: "rotate(90deg)",
+                  fontSize: "6px",
+                }}
+              >
+                {new Date().getFullYear()}
+              </p>
+            </div>
+          </div>
+          <p
+            style={{
+              overflow: "hidden",
+              fontFamily: "Helvetica",
+              fontSize: "8px",
+              margin: 0,
+              textRendering: "optimizeLegibility",
+              height: "19.5px",
+            }}
+          >
             {value.descripcion}
           </p>
         </div>

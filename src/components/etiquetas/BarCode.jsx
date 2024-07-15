@@ -81,10 +81,9 @@ const BarCode = ({ values }) => {
             <div
               style={{
                 transform: "rotate(-90deg)",
-                fontSize: "7px",
+                fontSize: "6px",
                 marginLeft: "-5px",
                 paddingLeft: "0",
-                marginTop:"-2px"
 
               }}
             >
@@ -106,7 +105,6 @@ const BarCode = ({ values }) => {
                   transform: "rotate(90deg)",
                   fontSize: "7px",
                   marginRight: "-2px",
-                  marginTop:"-8px"
                 }}
               >
                 {new Date().getFullYear()}

@@ -329,7 +329,7 @@ const Adeudo = ({ setTitle }) => {
             <p style={{ fontSize: "12px" }}>
               {data.anio === ""
                 ? '"AÑO DEL BICENTENARIO DE LAS BATALLAS HEROICAS DE AYACUCHO Y JUNIN"'
-                : data.anio}
+                : data.nombre_anio}
             </p>
             <section className="title">
               <u>CONSTANCIA Nº 053 - 2024</u>

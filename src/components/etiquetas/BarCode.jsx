@@ -95,10 +95,10 @@ const BarCode = ({ values }) => {
               value={value.codigo_activo}
               width={1.25}
               height={20}
-              fontSize={10}
-              marginTop={4}
-              marginBottom={3}
-              marginLeft={-1}
+              fontSize={12}
+              marginTop={2}
+              marginBottom={5}
+              marginLeft={-0.5}
             />
             <div>
               <p

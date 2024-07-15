@@ -17,7 +17,6 @@ const BarCode = ({ values }) => {
             marginBottom: "2mm",
             boxSizing: "border-box",
             padding: "0.2mm",
-            border: "1px solid red"
           }}
         >
           <div

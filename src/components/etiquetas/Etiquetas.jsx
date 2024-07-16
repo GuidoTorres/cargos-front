@@ -84,10 +84,7 @@ const Etiquetas = ({ setTitle }) => {
         params[key] = filtros[key];
       }
     }
-
-    
     const queryParams = new URLSearchParams(params).toString();
-    console.log(queryParams);
     const response = await fetch(
       `http://10.30.1.42:8084/api/v1/etiqueta?${queryParams}`
     );
@@ -162,7 +159,6 @@ const Etiquetas = ({ setTitle }) => {
     }
   };
 
-  console.log(filtros);
 
   return (
     <div className="container">

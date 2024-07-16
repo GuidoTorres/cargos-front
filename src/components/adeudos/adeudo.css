@@ -15,7 +15,7 @@
 .options{
     background-color: white;
     width: 400px;
-    height: 500px;
+    height: auto;
     padding: 20px;
 }
 .header1{

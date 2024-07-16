@@ -24,19 +24,43 @@ const Adeudo = ({ setTitle }) => {
   useEffect(() => {
     setTitle("Adeudos");
   }, []);
+  console.log(lineWidth);
+  const validateBeforePrint = () => {
+    if (
+      !data.modalidad ||
+      !data.tipo_encargado ||
+      !data.encargado ||
+      !data.trabajador
+    ) {
+      notification.error({
+        message:
+          "Los campos: Trabajador, Modalidad y Revisado por son obligatorios!",
+      });
+      return false;
+    }
+
+    return true;
+  };
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
+
+  const handlePrintWithValidation = () => {
+    if (validateBeforePrint()) {
+      handlePrint();
+    }
+  };
   const [trabajadores, setTrabajadores] = useState([]);
   const [planilla, setPlanilla] = useState();
+  const [todosTrabajadores, setTodosTrabajadores] = useState([]);
 
   const [data, setData] = useState({
     trabajador: "",
     nombre_anio:
       '"AÑO DEL BICENTENARIO DE LAS BATALLAS HEROICAS DE AYACUCHO Y JUNIN"',
     contenido: "al término de su contrato con fecha",
-    adeudo: "",
+    adeudo: "NO ADEUDA",
     modalidad: "",
     fecha: dayjs().format("DD-MM-YYYY"),
     tipo_encargado: "",
@@ -47,29 +71,43 @@ const Adeudo = ({ setTitle }) => {
 
   useEffect(() => {
     if (textRef.current) {
-      setLineWidth(`${textRef.current.offsetWidth}px`);
+      const width = textRef.current.offsetWidth;
+      console.log(textRef.current);
+      console.log(`Offset width: ${width}`); // Log para depurar el valor de offsetWidth
+      setLineWidth(`${width}px`);
     }
   }, [data.encargado, data.tipo_encargado]);
 
   const getTrabajadores = async () => {
-    const response = await fetch(`http://localhost:3001/api/v1/planilla`);
+    const response = await fetch(`http://10.30.1.42:8084/api/v1/planilla`);
     const info = await response.json();
     if (info) {
       setTrabajadores(info.data);
     }
     return info.data;
   };
+  const getTodosTrabajadores = async () => {
+    const response = await fetch(`http://10.30.1.42:8084/api/v1/usuario`);
+    const info = await response.json();
+    if (info) {
+      setTodosTrabajadores(info.data);
+    }
+    return info.data;
+  };
   useEffect(() => {
     getTrabajadores();
+    getTodosTrabajadores();
   }, []);
 
   useEffect(() => {
-    const filter = trabajadores.filter(
-      (item) => item.DE_FUNC == "ENCARGADO DE CONTROL Y SANEAMIENTO PATRIMONIAL"
-    );
-    setPlanilla(filter);
+    if (trabajadores.length > 0) {
+      const filter = trabajadores.filter(
+        (item) =>
+          item.DE_FUNC == "Encargado De Control Y Saneamiento Patrimonial"
+      );
+      setPlanilla(filter);
+    }
   }, [trabajadores]);
-
   const postAdeudo = async () => {
     const format = {
       ...data,
@@ -80,28 +118,46 @@ const Adeudo = ({ setTitle }) => {
           " " +
           planilla?.at(-1)?.AP_MATE || "",
     };
-    const response = await fetch(`http://localhost:3001/api/v1/adeudos`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(format),
-    });
-    const confirm = await response.json();
-    if (response.status === 201) {
-      notification.success({
-        message: confirm.msg,
+    if (
+      !format.modalidad ||
+      !format.tipo_encargado ||
+      !format.encargado ||
+      !format.trabajador
+    ) {
+      notification.error({
+        message:
+          "Los campos: Trabajador, Modalidad y Revisado por son obligatorios!",
       });
     } else {
-      notification.error({
-        message: confirm.msg,
+      const response = await fetch(`http://10.30.1.42:8084/api/v1/adeudos`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(format),
       });
+      const confirm = await response.json();
+      if (response.status === 201) {
+        notification.success({
+          message: confirm.msg,
+        });
+      } else {
+        notification.error({
+          message: confirm.msg,
+        });
+      }
     }
   };
 
   const adeudo = [
     { label: "ADEUDA", value: "ADEUDA" },
     { label: "NO ADEUDA", value: "NO ADEUDA" },
+  ];
+
+  const modalidad = [
+    { label: "construcción civil", value: "construcción civil" },
+    { label: "indeterminado", value: "indeterminado" },
+    { label: "contrato", value: "contrato" },
   ];
   return (
     <>
@@ -118,7 +174,7 @@ const Adeudo = ({ setTitle }) => {
                 fontWeight: "bold",
               }}
             >
-              Año
+              Nombre del año
             </p>
             <TextArea
               rows={2}
@@ -140,10 +196,10 @@ const Adeudo = ({ setTitle }) => {
             </p>
             <Select
               style={{ width: "100%" }}
-              options={trabajadores.map((item) => {
+              options={todosTrabajadores.map((item) => {
                 return {
-                  value: item.AP_PATE + " " + item.DE_NOMB,
-                  label: item.AP_PATE + " " + item.DE_NOMB,
+                  value: item.DE_NOMB + " " + item.AP_PATE + " " + item.AP_MATE,
+                  label: item.DE_NOMB + " " + item.AP_PATE + " " + item.AP_MATE,
                 };
               })}
               placeholder="Trabajador"
@@ -166,55 +222,12 @@ const Adeudo = ({ setTitle }) => {
                 fontWeight: "bold",
               }}
             >
-              Adeudo
-            </p>
-            <Select
-              style={{ width: "100%" }}
-              options={adeudo.map((item) => item)}
-              onChange={(e) => setData((data) => ({ ...data, adeudo: e }))}
-              showSearch
-              optionFilterProp="children"
-              filterOption={(input, option) =>
-                (option?.label ?? "")
-                  .toLowerCase()
-                  .includes(input.toLowerCase())
-              }
-              allowClear
-              placeholder="Adeudo"
-            ></Select>
-          </div>
-          <div style={{ marginTop: "20px" }}>
-            <p
-              style={{
-                textAlign: "left",
-                marginBottom: "10px",
-                fontWeight: "bold",
-              }}
-            >
-              Contenido
-            </p>
-            <TextArea
-              rows={3}
-              onChange={(e) =>
-                setData((data) => ({ ...data, contenido: e.target.value }))
-              }
-              placeholder="al término de su contrato con fecha"
-            />
-          </div>
-          <div style={{ marginTop: "20px" }}>
-            <p
-              style={{
-                textAlign: "left",
-                marginBottom: "10px",
-                fontWeight: "bold",
-              }}
-            >
               Fecha
             </p>
             <DatePicker
               style={{ width: "100%" }}
               format={"DD-MM-YYYY"}
-              placeholder="Selecciona una fecha"
+              placeholder="Selecciona una fecha o se guardara la fecha actual."
               onChange={(e) =>
                 setData((data) => ({
                   ...data,
@@ -236,7 +249,7 @@ const Adeudo = ({ setTitle }) => {
             <Select
               placeholder="Modalidad"
               style={{ width: "100%" }}
-              options={adeudo.map((item) => item)}
+              options={modalidad.map((item) => item)}
               onChange={(e) => setData((data) => ({ ...data, modalidad: e }))}
             ></Select>
           </div>
@@ -248,7 +261,7 @@ const Adeudo = ({ setTitle }) => {
                 fontWeight: "bold",
               }}
             >
-              Encargado
+              Revisado por
             </p>
             <div style={{ display: "flex", gap: "2px" }}>
               <Input
@@ -265,15 +278,16 @@ const Adeudo = ({ setTitle }) => {
                 options={trabajadores.map((item) => {
                   return {
                     value:
-                    item.DE_NOMB + " " + item.AP_PATE + " " + item.AP_MATE,
+                      item.DE_NOMB + " " + item.AP_PATE + " " + item.AP_MATE,
                     label:
                       item.DE_NOMB + " " + item.AP_PATE + " " + item.AP_MATE,
                   };
                 })}
-                placeholder="Encargado"
+                placeholder="Revisado por"
                 onChange={(e) => setData((data) => ({ ...data, encargado: e }))}
                 showSearch
                 optionFilterProp="children"
+                popupMatchSelectWidth={false}
                 filterOption={(input, option) =>
                   (option?.label ?? "")
                     .toLowerCase()
@@ -291,7 +305,6 @@ const Adeudo = ({ setTitle }) => {
             height: "210mm", // A5 height
             padding: "10mm", // Padding for content
             boxSizing: "border-box",
-            width: "600px",
           }}
           ref={componentRef}
         >
@@ -324,15 +337,14 @@ const Adeudo = ({ setTitle }) => {
                 <Image src={image} preview={false} style={{ width: "80px" }} />
               </div>
             </section>
-            <br />
-            <hr style={{ width: "95%" }} />
-            <p style={{ fontSize: "12px" }}>
+            <hr style={{ width: "100%", marginTop: "8px" }} />
+            <p style={{ fontSize: "12px", marginTop: "8px" }}>
               {data.anio === ""
                 ? '"AÑO DEL BICENTENARIO DE LAS BATALLAS HEROICAS DE AYACUCHO Y JUNIN"'
                 : data.nombre_anio}
             </p>
             <section className="title">
-              <u>CONSTANCIA Nº 053 - 2024</u>
+              <u>CONSTANCIA Nº XXX - 2024</u>
             </section>
             <section className="body">
               <p style={{ textAlign: "justify", marginTop: "15px" }}>
@@ -344,9 +356,7 @@ const Adeudo = ({ setTitle }) => {
               </p>
               <p style={{ textAlign: "justify", marginTop: "15px" }}>
                 Que el Sr. (a,ta):
-                <strong>
-                  {data.trabajador ? data.trabajador : "_______________"}
-                </strong>
+                <strong> {data.trabajador}</strong>
               </p>
 
               <p
@@ -365,8 +375,10 @@ const Adeudo = ({ setTitle }) => {
                 {data.contenido
                   ? data.contenido
                   : "al término de su contrato con fecha"}{" "}
-                {data.fecha ? data.fecha : dayjs().format("DD-MM-YYYY")} en la
-                modalidad de {data.modalidad ? data.modalidad : "___________"}.
+                <strong>
+                  {data.fecha ? data.fecha : dayjs().format("DD-MM-YYYY")}
+                </strong>{" "}
+                en la modalidad de {data.modalidad}.
               </p>
 
               <p style={{ textAlign: "justify", marginTop: "15px" }}>
@@ -394,7 +406,7 @@ const Adeudo = ({ setTitle }) => {
                   textTransform: "capitalize",
                 }}
               >
-                LIC.{" "}
+                Lic.{" "}
                 {planilla?.at(-1)?.DE_NOMB +
                   " " +
                   planilla?.at(-1)?.AP_PATE +
@@ -410,26 +422,46 @@ const Adeudo = ({ setTitle }) => {
                 Responsable Control y Saneamiento Patrimonial(e)
               </p>
             </section>
-            <p
+            <div
               style={{
-                textAlign: "left",
-                marginTop: "20px",
                 width: "100%",
+                display: "flex",
+                flexDirection: "column",
+                alignContent: "flex-start",
               }}
             >
-              Revisado, Verificado y Elaborado Por:
-            </p>
-            <p
-              style={{ textAlign: "left", marginTop: "80px", width: lineWidth }}
-            >
-              ___________________________
-            </p>
-            <p
-              ref={textRef}
-              style={{ textAlign: "left", marginTop: "5px", width: "100%" }}
-            >
-              {data?.tipo_encargado} {data?.encargado}
-            </p>
+              <p
+                style={{
+                  textAlign: "left",
+                  marginTop: "40px",
+                  width: "100%",
+                }}
+              >
+                Revisado, Verificado y Elaborado Por:
+              </p>
+
+              <span
+                style={{
+                  textAlign: "left",
+                  marginTop: "60px",
+                  width: lineWidth,
+                }}
+              >
+                ___________________________
+              </span>
+              <p
+                ref={textRef}
+                style={{
+                  textAlign: "left",
+                  marginTop: "5px",
+                  display: "inline-block",
+                  width: "auto",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {`${data?.tipo_encargado} ${data?.encargado}`}
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -438,7 +470,7 @@ const Adeudo = ({ setTitle }) => {
           <Button type="primary" onClick={postAdeudo}>
             Guardar
           </Button>
-          <Button onClick={handlePrint}>Imprimir</Button>
+          <Button onClick={handlePrintWithValidation}>Imprimir</Button>
         </div>
       </section>
     </>

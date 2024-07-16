@@ -46,7 +46,7 @@ const Sidebar = () => {
         className="menu-bar"
         items={[
           { key: "/cargos", icon: <SolutionOutlined />, label: "Cargos" },
-          // { key: "/adeudo", icon: <FormOutlined />, label: "Adeudos" },
+          { key: "/adeudo", icon: <FormOutlined />, label: "Adeudos" },
           { key: "/etiquetas", icon: <BarcodeOutlined />, label: "Etiquetas" },
 
         ]}

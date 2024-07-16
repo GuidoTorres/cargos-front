@@ -22,7 +22,7 @@ const OpcionAdeudo = ({ setTitle }) => {
         <section className="menu">
           <FormOutlined style={{fontSize:"120px"}}/>
         </section>
-        <label htmlFor="">Crear adeudo</label>
+        <label htmlFor="">Constancia adeudo</label>
       </div>
     </div>
   );

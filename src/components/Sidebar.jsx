@@ -9,6 +9,7 @@ import {
   SolutionOutlined,
   FormOutlined,
   BarcodeOutlined,
+  BarsOutlined,
 } from "@ant-design/icons";
 import "./styles/sidebar.css";
 import imagen from "../assets/autodema.png";
@@ -48,6 +49,7 @@ const Sidebar = () => {
           { key: "/cargos", icon: <SolutionOutlined />, label: "Cargos" },
           { key: "/adeudo", icon: <FormOutlined />, label: "Adeudos" },
           { key: "/etiquetas", icon: <BarcodeOutlined />, label: "Etiquetas" },
+          { key: "/saneamiento", icon: <BarsOutlined />, label: "Saneamiento" },
 
         ]}
         onClick={handleMenuClick}

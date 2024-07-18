@@ -20,6 +20,7 @@ import Adeudo from "../components/adeudos/Adeudo";
 import Etiquetas from "../components/etiquetas/Etiquetas";
 import OpcionAdeudo from "../components/adeudos/OpcionAdeudo";
 import HistorialAdeudo from "../components/adeudos/HistorialAdeudo";
+import Saneamiento from "../components/saneamiento/Saneamiento";
 const { Sider, Header, Content } = Layout;
 
 const MainPage = () => {
@@ -112,6 +113,14 @@ const MainPage = () => {
                   element={
                     <ProtectedRoute>
                       <Etiquetas setTitle={setTitle} />
+                    </ProtectedRoute>
+                  }
+                />
+                                <Route
+                  path="/saneamiento"
+                  element={
+                    <ProtectedRoute>
+                      <Saneamiento setTitle={setTitle} />
                     </ProtectedRoute>
                   }
                 />

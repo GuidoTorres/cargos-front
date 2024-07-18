@@ -4,7 +4,7 @@ import Barcode from "react-barcode";
 import image from "../../assets/logo_autodema.png";
 import image1 from "../../assets/gobierno.png";
 
-const BarCode = ({ values }) => {
+const BarCode = ({ values, saneamiento }) => {
   return (
     <>
       {values?.map((value, index) => (
@@ -36,7 +36,7 @@ const BarCode = ({ values }) => {
             </div>
             <div
               style={{
-                fontSize: "8px",
+                fontSize: saneamiento ? "7px" : "8px",
                 fontFamily: "Helvetica",
                 lineHeight: "1",
                 flex: 8,
@@ -51,7 +51,9 @@ const BarCode = ({ values }) => {
                   textRendering: "optimizeLegibility",
                 }}
               >
-                PEIMS - AUTODEMA - PATRIMONIO
+                {saneamiento
+                  ? "PEIMS - AUTODEMA - SANEAMIENTO"
+                  : "PEIMS - AUTODEMA - PATRIMONIO"}
               </p>
               <div
                 style={{
@@ -75,7 +77,6 @@ const BarCode = ({ values }) => {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
- 
             }}
           >
             <div
@@ -84,10 +85,9 @@ const BarCode = ({ values }) => {
                 fontSize: "6px",
                 marginLeft: "-5px",
                 paddingLeft: "0",
-
               }}
             >
-              <label>{`O/C`+ " "+value.nro_orden}</label>
+              <label>{`O/C` + " " + value.nro_orden}</label>
             </div>
 
             <Barcode
@@ -107,7 +107,7 @@ const BarCode = ({ values }) => {
                   marginRight: "-2px",
                 }}
               >
-                {new Date().getFullYear()}
+                {saneamiento ? "2023" : new Date().getFullYear()}
               </p>
             </div>
           </div>

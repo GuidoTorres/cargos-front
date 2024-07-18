@@ -26,12 +26,7 @@ const Adeudo = ({ setTitle }) => {
   }, []);
   console.log(lineWidth);
   const validateBeforePrint = () => {
-    if (
-      !data.modalidad ||
-      !data.tipo_encargado ||
-      !data.encargado ||
-      !data.trabajador
-    ) {
+    if (!data.modalidad || !data.encargado || !data.trabajador) {
       notification.error({
         message:
           "Los campos: Trabajador, Modalidad y Revisado por son obligatorios!",
@@ -58,7 +53,7 @@ const Adeudo = ({ setTitle }) => {
   const [data, setData] = useState({
     trabajador: "",
     nombre_anio:
-      '"AÑO DEL BICENTENARIO DE LAS BATALLAS HEROICAS DE AYACUCHO Y JUNIN"',
+      '"AÑO DEL BICENTENARIO, DE LA CONSOLIDACIÓN DE NUESTRA INDEPENDENCIA, Y DE LA CONMEMORACIÓN DE LAS HEROICAS BATALLAS DE JUNIN Y AYACUCHO"',
     contenido: "al término de su contrato con fecha",
     adeudo: "NO ADEUDA",
     modalidad: "",
@@ -118,12 +113,7 @@ const Adeudo = ({ setTitle }) => {
           " " +
           planilla?.at(-1)?.AP_MATE || "",
     };
-    if (
-      !format.modalidad ||
-      !format.tipo_encargado ||
-      !format.encargado ||
-      !format.trabajador
-    ) {
+    if (!format.modalidad || !format.encargado || !format.trabajador) {
       notification.error({
         message:
           "Los campos: Trabajador, Modalidad y Revisado por son obligatorios!",

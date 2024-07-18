@@ -161,6 +161,7 @@ const Etiquetas = ({ setTitle }) => {
 
 
   return (
+    
     <div className="container">
       <div className="filters">
         <section className="filters-left">

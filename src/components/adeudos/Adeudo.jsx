@@ -24,7 +24,6 @@ const Adeudo = ({ setTitle }) => {
   useEffect(() => {
     setTitle("Adeudos");
   }, []);
-  console.log(lineWidth);
   const validateBeforePrint = () => {
     if (!data.modalidad || !data.encargado || !data.trabajador) {
       notification.error({
@@ -39,6 +38,37 @@ const Adeudo = ({ setTitle }) => {
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
+    pageStyle: `
+      @page {
+        size: A4 landscape;
+        margin: 0;
+      }
+
+      @media print {
+        body {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+        @page {
+          size: A4 landscape;
+          margin: 0; /* Removes the margin to avoid headers and footers */
+        }
+        .page-container {
+          display: flex;
+          justify-content: center;
+          align-items: flex-start;
+          width: 100%;
+          height: 50%; /* Half the height of an A4 page */
+        }
+        .page-container .printable {
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+      }
+    `,
+  
   });
 
   const handlePrintWithValidation = () => {

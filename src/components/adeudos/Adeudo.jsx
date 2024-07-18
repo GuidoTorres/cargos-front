@@ -390,7 +390,7 @@ const Adeudo = ({ setTitle }) => {
 
               <p
                 style={{
-                  marginTop: "80px",
+                  marginTop: "60px",
                   width: "100%",
                   textAlign: "center",
                 }}
@@ -441,7 +441,7 @@ const Adeudo = ({ setTitle }) => {
               <span
                 style={{
                   textAlign: "left",
-                  marginTop: "60px",
+                  marginTop: "40px",
                   width: lineWidth,
                 }}
               >

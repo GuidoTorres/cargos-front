@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.c35e2ab3.css",
-    "main.js": "/static/js/main.fb8fb816.js",
+    "main.css": "/static/css/main.56042a7e.css",
+    "main.js": "/static/js/main.69c5e033.js",
     "static/media/logo_autodema.png": "/static/media/logo_autodema.642a68f43e26ce328e0d.png",
     "static/media/autodema.png": "/static/media/autodema.a845f188402744ae60e6.png",
     "static/media/gobierno.png": "/static/media/gobierno.a3d6d3808a2b9bb00520.png",
     "index.html": "/index.html",
-    "main.c35e2ab3.css.map": "/static/css/main.c35e2ab3.css.map",
-    "main.fb8fb816.js.map": "/static/js/main.fb8fb816.js.map"
+    "main.56042a7e.css.map": "/static/css/main.56042a7e.css.map",
+    "main.69c5e033.js.map": "/static/js/main.69c5e033.js.map"
   },
   "entrypoints": [
-    "static/css/main.c35e2ab3.css",
-    "static/js/main.fb8fb816.js"
+    "static/css/main.56042a7e.css",
+    "static/js/main.69c5e033.js"
   ]
 }

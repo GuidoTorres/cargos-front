@@ -18,6 +18,8 @@ const formatDate = () => {
 };
 const Adeudo = ({ setTitle }) => {
   const componentRef = useRef();
+  const componentRef2 = useRef();
+
   const textRef = useRef();
   const [lineWidth, setLineWidth] = useState("100%");
 
@@ -38,15 +40,29 @@ const Adeudo = ({ setTitle }) => {
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
+
     pageStyle: `
-      @page {
-        size: A5 !important;
+    @page {
+      size: A4 landscape !important;
+      margin: 0;
+    }
+    @media print {
+      .print-container {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        height: 100%;
+        padding: 0;
         margin: 0;
       }
-
-
-    `,
-  
+      .print-container > div {
+        width: 50%;
+        box-sizing: border-box;
+        padding: 10mm;
+        margin: 0;
+      }
+    }
+  `,
   });
 
   const handlePrintWithValidation = () => {
@@ -296,169 +312,348 @@ const Adeudo = ({ setTitle }) => {
             </div>
           </div>
         </div>
-        <div
-          style={{
-            backgroundColor: "white",
-            width: "148mm", // A5 width
-            height: "210mm", // A5 height
-            padding: "10mm", // Padding for content
-            boxSizing: "border-box",
-          }}
-          ref={componentRef}
-        >
+        <div className="print-container" ref={componentRef}>
           <div
             style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              flexDirection: "column",
+              backgroundColor: "white",
+              width: "148mm", // A5 width
+              height: "200mm", // A5 height
+              padding: "10mm", // Padding for content
+              boxSizing: "border-box",
             }}
           >
-            <section className="header1">
-              <div className="imagen1">
-                <Image
-                  src={gobierno}
-                  preview={false}
-                  style={{ width: "100px" }}
-                />
-              </div>
-              <div className="title">
-                <p style={{ fontSize: "14px" }}>
-                  GOBIERNO REGIONAL DE AREQUIPA
-                </p>
-                <p style={{ fontSize: "14px" }}>AUTORIDAD AUTONOMA DE MAJES</p>
-                <p style={{ fontSize: "14px" }}>
-                  PROYECTO ESPECIAL MAJES - SIGUAS
-                </p>
-              </div>
-              <div className="imagen2">
-                <Image src={image} preview={false} style={{ width: "80px" }} />
-              </div>
-            </section>
-            <hr style={{ width: "100%", marginTop: "8px" }} />
-            <p style={{ fontSize: "12px", marginTop: "8px" }}>
-              {data.anio === ""
-                ? '"AÑO DEL BICENTENARIO DE LAS BATALLAS HEROICAS DE AYACUCHO Y JUNIN"'
-                : data.nombre_anio}
-            </p>
-            <section className="title">
-              <u>CONSTANCIA Nº XXX - 2024</u>
-            </section>
-            <section className="body">
-              <p style={{ textAlign: "justify", marginTop: "15px" }}>
-                El que suscribe, jefe(e) del Área de Control y Saneamiento
-                Patrimonial del Proyecto Especial Majes Siguas - AUTODEMA
-              </p>
-              <p style={{ textAlign: "justify", marginTop: "15px" }}>
-                Hace constar:
-              </p>
-              <p style={{ textAlign: "justify", marginTop: "15px" }}>
-                Que el Sr. (a,ta):
-                <strong> {data.trabajador}</strong>
-              </p>
-
-              <p
-                style={{
-                  textAlign: "justify",
-                  marginTop: "15px",
-                  textJustify: "",
-                }}
-              >
-                Ex trabajador (a) del Proyecto Especial MAJES - AUTODEMA
-                <strong>
-                  {" "}
-                  {data.adeudo ? data.adeudo : "_______________"}
-                </strong>{" "}
-                ningun bien patrimonial,{" "}
-                {data.contenido
-                  ? data.contenido
-                  : "al término de su contrato con fecha"}{" "}
-                <strong>
-                  {data.fecha ? data.fecha : dayjs().format("DD-MM-YYYY")}
-                </strong>{" "}
-                en la modalidad de {data.modalidad}.
-              </p>
-
-              <p style={{ textAlign: "justify", marginTop: "15px" }}>
-                Se expide la presente solicitud del interesado, para los fines
-                que estime convenientes.
-              </p>
-
-              <p style={{ textAlign: "justify", marginTop: "15px" }}>
-                Arequipa, {formatDate()}
-              </p>
-
-              <p
-                style={{
-                  marginTop: "60px",
-                  width: "100%",
-                  textAlign: "center",
-                }}
-              >
-                _____________________________________________
-              </p>
-              <p
-                style={{
-                  width: "100%",
-                  textAlign: "center",
-                  textTransform: "capitalize",
-                }}
-              >
-                Lic.{" "}
-                {planilla?.at(-1)?.DE_NOMB +
-                  " " +
-                  planilla?.at(-1)?.AP_PATE +
-                  " " +
-                  planilla?.at(-1)?.AP_MATE}
-              </p>
-              <p
-                style={{
-                  width: "100%",
-                  textAlign: "center",
-                }}
-              >
-                Responsable Control y Saneamiento Patrimonial(e)
-              </p>
-            </section>
             <div
               style={{
-                width: "100%",
                 display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
                 flexDirection: "column",
-                alignContent: "flex-start",
               }}
             >
-              <p
-                style={{
-                  textAlign: "left",
-                  marginTop: "40px",
-                  width: "100%",
-                }}
-              >
-                Revisado, Verificado y Elaborado Por:
+              <section className="header1">
+                <div className="imagen1">
+                  <Image
+                    src={gobierno}
+                    preview={false}
+                    style={{ width: "100px" }}
+                  />
+                </div>
+                <div className="title">
+                  <p style={{ fontSize: "14px" }}>
+                    GOBIERNO REGIONAL DE AREQUIPA
+                  </p>
+                  <p style={{ fontSize: "14px" }}>
+                    AUTORIDAD AUTONOMA DE MAJES
+                  </p>
+                  <p style={{ fontSize: "14px" }}>
+                    PROYECTO ESPECIAL MAJES - SIGUAS
+                  </p>
+                </div>
+                <div className="imagen2">
+                  <Image
+                    src={image}
+                    preview={false}
+                    style={{ width: "80px" }}
+                  />
+                </div>
+              </section>
+              <hr style={{ width: "100%", marginTop: "8px" }} />
+              <p style={{ fontSize: "12px", marginTop: "8px" }}>
+                {data.anio === ""
+                  ? '"AÑO DEL BICENTENARIO DE LAS BATALLAS HEROICAS DE AYACUCHO Y JUNIN"'
+                  : data.nombre_anio}
               </p>
+              <section className="title">
+                <u>CONSTANCIA Nº XXX - 2024</u>
+              </section>
+              <section className="body">
+                <p style={{ textAlign: "justify", marginTop: "15px" }}>
+                  El que suscribe, jefe(e) del Área de Control y Saneamiento
+                  Patrimonial del Proyecto Especial Majes Siguas - AUTODEMA
+                </p>
+                <p style={{ textAlign: "justify", marginTop: "15px" }}>
+                  Hace constar:
+                </p>
+                <p style={{ textAlign: "justify", marginTop: "15px" }}>
+                  Que el Sr. (a,ta):
+                  <strong> {data.trabajador}</strong>
+                </p>
 
-              <span
+                <p
+                  style={{
+                    textAlign: "justify",
+                    marginTop: "15px",
+                    textJustify: "",
+                  }}
+                >
+                  Ex trabajador (a) del Proyecto Especial MAJES - AUTODEMA
+                  <strong>
+                    {" "}
+                    {data.adeudo ? data.adeudo : "_______________"}
+                  </strong>{" "}
+                  ningun bien patrimonial,{" "}
+                  {data.contenido
+                    ? data.contenido
+                    : "al término de su contrato con fecha"}{" "}
+                  <strong>
+                    {data.fecha ? data.fecha : dayjs().format("DD-MM-YYYY")}
+                  </strong>{" "}
+                  en la modalidad de {data.modalidad}.
+                </p>
+
+                <p style={{ textAlign: "justify", marginTop: "15px" }}>
+                  Se expide la presente solicitud del interesado, para los fines
+                  que estime convenientes.
+                </p>
+
+                <p style={{ textAlign: "justify", marginTop: "15px" }}>
+                  Arequipa, {formatDate()}
+                </p>
+
+                <p
+                  style={{
+                    marginTop: "60px",
+                    width: "100%",
+                    textAlign: "center",
+                  }}
+                >
+                  _____________________________________________
+                </p>
+                <p
+                  style={{
+                    width: "100%",
+                    textAlign: "center",
+                    textTransform: "capitalize",
+                  }}
+                >
+                  Lic.{" "}
+                  {planilla?.at(-1)?.DE_NOMB +
+                    " " +
+                    planilla?.at(-1)?.AP_PATE +
+                    " " +
+                    planilla?.at(-1)?.AP_MATE}
+                </p>
+                <p
+                  style={{
+                    width: "100%",
+                    textAlign: "center",
+                  }}
+                >
+                  Responsable Control y Saneamiento Patrimonial(e)
+                </p>
+              </section>
+              <div
                 style={{
-                  textAlign: "left",
-                  marginTop: "40px",
-                  width: lineWidth,
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignContent: "flex-start",
                 }}
               >
-                ___________________________
-              </span>
-              <p
-                ref={textRef}
-                style={{
-                  textAlign: "left",
-                  marginTop: "5px",
-                  display: "inline-block",
-                  width: "auto",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                {`${data?.tipo_encargado} ${data?.encargado}`}
+                <p
+                  style={{
+                    textAlign: "left",
+                    marginTop: "40px",
+                    width: "100%",
+                  }}
+                >
+                  Revisado, Verificado y Elaborado Por:
+                </p>
+
+                <span
+                  style={{
+                    textAlign: "left",
+                    marginTop: "40px",
+                    width: lineWidth,
+                  }}
+                >
+                  ___________________________
+                </span>
+                <p
+                  ref={textRef}
+                  style={{
+                    textAlign: "left",
+                    marginTop: "5px",
+                    display: "inline-block",
+                    width: "auto",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {`${data?.tipo_encargado} ${data?.encargado}`}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div
+            className="print-only"
+            style={{
+              backgroundColor: "white",
+              width: "148mm",
+              height: "200mm",
+              padding: "10mm",
+              boxSizing: "border-box",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                flexDirection: "column",
+              }}
+            >
+              <section className="header1">
+                <div className="imagen1">
+                  <Image
+                    src={gobierno}
+                    preview={false}
+                    style={{ width: "100px" }}
+                  />
+                </div>
+                <div className="title">
+                  <p style={{ fontSize: "14px" }}>
+                    GOBIERNO REGIONAL DE AREQUIPA
+                  </p>
+                  <p style={{ fontSize: "14px" }}>
+                    AUTORIDAD AUTONOMA DE MAJES
+                  </p>
+                  <p style={{ fontSize: "14px" }}>
+                    PROYECTO ESPECIAL MAJES - SIGUAS
+                  </p>
+                </div>
+                <div className="imagen2">
+                  <Image
+                    src={image}
+                    preview={false}
+                    style={{ width: "80px" }}
+                  />
+                </div>
+              </section>
+              <hr style={{ width: "100%", marginTop: "8px" }} />
+              <p style={{ fontSize: "12px", marginTop: "8px" }}>
+                {data.anio === ""
+                  ? '"AÑO DEL BICENTENARIO DE LAS BATALLAS HEROICAS DE AYACUCHO Y JUNIN"'
+                  : data.nombre_anio}
               </p>
+              <section className="title">
+                <u>CONSTANCIA Nº XXX - 2024</u>
+              </section>
+              <section className="body">
+                <p style={{ textAlign: "justify", marginTop: "15px" }}>
+                  El que suscribe, jefe(e) del Área de Control y Saneamiento
+                  Patrimonial del Proyecto Especial Majes Siguas - AUTODEMA
+                </p>
+                <p style={{ textAlign: "justify", marginTop: "15px" }}>
+                  Hace constar:
+                </p>
+                <p style={{ textAlign: "justify", marginTop: "15px" }}>
+                  Que el Sr. (a,ta):
+                  <strong> {data.trabajador}</strong>
+                </p>
+
+                <p
+                  style={{
+                    textAlign: "justify",
+                    marginTop: "15px",
+                    textJustify: "",
+                  }}
+                >
+                  Ex trabajador (a) del Proyecto Especial MAJES - AUTODEMA
+                  <strong>
+                    {" "}
+                    {data.adeudo ? data.adeudo : "_______________"}
+                  </strong>{" "}
+                  ningun bien patrimonial,{" "}
+                  {data.contenido
+                    ? data.contenido
+                    : "al término de su contrato con fecha"}{" "}
+                  <strong>
+                    {data.fecha ? data.fecha : dayjs().format("DD-MM-YYYY")}
+                  </strong>{" "}
+                  en la modalidad de {data.modalidad}.
+                </p>
+
+                <p style={{ textAlign: "justify", marginTop: "15px" }}>
+                  Se expide la presente solicitud del interesado, para los fines
+                  que estime convenientes.
+                </p>
+
+                <p style={{ textAlign: "justify", marginTop: "15px" }}>
+                  Arequipa, {formatDate()}
+                </p>
+
+                <p
+                  style={{
+                    marginTop: "60px",
+                    width: "100%",
+                    textAlign: "center",
+                  }}
+                >
+                  _____________________________________________
+                </p>
+                <p
+                  style={{
+                    width: "100%",
+                    textAlign: "center",
+                    textTransform: "capitalize",
+                  }}
+                >
+                  Lic.{" "}
+                  {planilla?.at(-1)?.DE_NOMB +
+                    " " +
+                    planilla?.at(-1)?.AP_PATE +
+                    " " +
+                    planilla?.at(-1)?.AP_MATE}
+                </p>
+                <p
+                  style={{
+                    width: "100%",
+                    textAlign: "center",
+                  }}
+                >
+                  Responsable Control y Saneamiento Patrimonial(e)
+                </p>
+              </section>
+              <div
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignContent: "flex-start",
+                }}
+              >
+                <p
+                  style={{
+                    textAlign: "left",
+                    marginTop: "40px",
+                    width: "100%",
+                  }}
+                >
+                  Revisado, Verificado y Elaborado Por:
+                </p>
+
+                <span
+                  style={{
+                    textAlign: "left",
+                    marginTop: "40px",
+                    width: lineWidth,
+                  }}
+                >
+                  ___________________________
+                </span>
+                <p
+                  ref={textRef}
+                  style={{
+                    textAlign: "left",
+                    marginTop: "5px",
+                    display: "inline-block",
+                    width: "auto",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {`${data?.tipo_encargado} ${data?.encargado}`}
+                </p>
+              </div>
             </div>
           </div>
         </div>

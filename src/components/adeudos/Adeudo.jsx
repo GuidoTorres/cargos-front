@@ -5,6 +5,8 @@ import gobierno from "../../assets/gobierno.png";
 import { Select, Input, Image, Button, DatePicker, notification } from "antd";
 import { useReactToPrint } from "react-to-print";
 import dayjs from "dayjs";
+import { useNavigate } from 'react-router-dom';
+
 import "dayjs/locale/es";
 
 dayjs.locale("es");
@@ -17,6 +19,8 @@ const formatDate = () => {
   return `${day} de ${month} del ${year}`;
 };
 const Adeudo = ({ setTitle }) => {
+  const navigate = useNavigate(); // Obtén la función navigate
+
   const componentRef = useRef();
   const componentRef2 = useRef();
 
@@ -155,7 +159,8 @@ const Adeudo = ({ setTitle }) => {
         notification.success({
           message: confirm.msg,
         });
-      } else {
+        navigate('/adeudo/historial');
+    } else {
         notification.error({
           message: confirm.msg,
         });

@@ -75,7 +75,7 @@ const ModalVerAdeudo = ({ data, setMostrar, mostrar }) => {
           style={{
             backgroundColor: "white",
             width: "148mm", // A5 width
-            height: "200mm", // A5 height
+            height: "190mm", // A5 height
             padding: "10mm", // Padding for content
             boxSizing: "border-box",
           }}
@@ -124,7 +124,7 @@ const ModalVerAdeudo = ({ data, setMostrar, mostrar }) => {
             <section className="title">
               <u>CONSTANCIA Nº {data.correlativo} - 2024</u>
             </section>
-            <section className="body">
+            <section className="body" style={{fontSize:"14px"}}>
               <p style={{ textAlign: "justify", marginTop: "15px" }}>
                 El que suscribe, jefe(e) del Área de Control y Saneamiento
                 Patrimonial del Proyecto Especial Majes Siguas - AUTODEMA
@@ -176,7 +176,8 @@ const ModalVerAdeudo = ({ data, setMostrar, mostrar }) => {
                   textAlign: "center",
                 }}
               >
-                _______________________
+              _____________________________
+
               </p>
               <p
                 style={{
@@ -223,7 +224,7 @@ const ModalVerAdeudo = ({ data, setMostrar, mostrar }) => {
           style={{
             backgroundColor: "white",
             width: "148mm",
-            height: "200mm",
+            height: "190mm",
             padding: "10mm",
             boxSizing: "border-box",
           }}
@@ -272,7 +273,7 @@ const ModalVerAdeudo = ({ data, setMostrar, mostrar }) => {
             <section className="title">
               <u>CONSTANCIA Nº {data.correlativo} - 2024</u>
             </section>
-            <section className="body">
+            <section className="body" style={{fontSize:"14px"}}>
               <p style={{ textAlign: "justify", marginTop: "15px" }}>
                 El que suscribe, jefe(e) del Área de Control y Saneamiento
                 Patrimonial del Proyecto Especial Majes Siguas - AUTODEMA
@@ -324,7 +325,7 @@ const ModalVerAdeudo = ({ data, setMostrar, mostrar }) => {
                   textAlign: "center",
                 }}
               >
-                _______________________
+                _____________________________
               </p>
               <p
                 style={{

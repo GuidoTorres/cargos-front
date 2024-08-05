@@ -317,7 +317,7 @@ const Adeudo = ({ setTitle }) => {
             style={{
               backgroundColor: "white",
               width: "148mm", // A5 width
-              height: "200mm", // A5 height
+              height: "190mm", // A5 height
               padding: "10mm", // Padding for content
               boxSizing: "border-box",
             }}
@@ -417,7 +417,7 @@ const Adeudo = ({ setTitle }) => {
                     textAlign: "center",
                   }}
                 >
-                  _____________________________________________
+                  __________________________________
                 </p>
                 <p
                   style={{
@@ -589,7 +589,7 @@ const Adeudo = ({ setTitle }) => {
                     textAlign: "center",
                   }}
                 >
-                  _____________________________________________
+                  __________________________________
                 </p>
                 <p
                   style={{
@@ -625,7 +625,7 @@ const Adeudo = ({ setTitle }) => {
                 <p
                   style={{
                     textAlign: "left",
-                    marginTop: "40px",
+                    marginTop: "20px",
                     width: "100%",
                   }}
                 >
@@ -663,7 +663,7 @@ const Adeudo = ({ setTitle }) => {
           <Button type="primary" onClick={postAdeudo}>
             Guardar
           </Button>
-          <Button onClick={handlePrintWithValidation}>Imprimir</Button>
+       {/* <Button onClick={handlePrintWithValidation}>Imprimir</Button> */}
         </div>
       </section>
     </>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Button, Table } from "antd";
 import {
   EditOutlined,
@@ -10,6 +10,8 @@ import dayjs from "dayjs";
 import ModalVerAdeudo from "./ModalVerAdeudo";
 
 const HistorialAdeudo = () => {
+
+
   const [adeudo, setAdeudo] = useState([]);
   const [mostrar, setMostrar] = useState(false);
   const [editar, setEditar] = useState();
@@ -33,10 +35,10 @@ const HistorialAdeudo = () => {
       align: "center",
     },
     {
-        title: "Trabajador",
-        dataIndex: "trabajador",
-        align: "center",
-      },
+      title: "Trabajador",
+      dataIndex: "trabajador",
+      align: "center",
+    },
     {
       title: "Encargado",
       dataIndex: "encargado",
@@ -71,11 +73,13 @@ const HistorialAdeudo = () => {
       <Table columns={columns} dataSource={adeudo} />
 
       {mostrar ? (
-        <ModalVerAdeudo
-          mostrar={mostrar}
-          setMostrar={setMostrar}
-          data={editar}
-        />
+        <>
+          <ModalVerAdeudo
+            mostrar={mostrar}
+            setMostrar={setMostrar}
+            data={editar}
+          />
+        </>
       ) : null}
     </div>
   );

@@ -176,7 +176,7 @@ const ModalVerAdeudo = ({ data, setMostrar, mostrar }) => {
                   textAlign: "center",
                 }}
               >
-                _____________________________________________
+                _______________________
               </p>
               <p
                 style={{
@@ -324,7 +324,7 @@ const ModalVerAdeudo = ({ data, setMostrar, mostrar }) => {
                   textAlign: "center",
                 }}
               >
-                _____________________________________________
+                _______________________
               </p>
               <p
                 style={{

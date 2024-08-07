@@ -109,17 +109,16 @@ const Adeudo = ({ setTitle }) => {
     }
     return info.data;
   };
-  const getTodosTrabajadores = async () => {
-    const response = await fetch(`http://10.30.1.42:8084/api/v1/usuario`);
-    const info = await response.json();
-    if (info) {
-      setTodosTrabajadores(info.data);
-    }
-    return info.data;
-  };
+  // const getTodosTrabajadores = async () => {
+  //   const response = await fetch(`http://10.30.1.42:8084/api/v1/usuario`);
+  //   const info = await response.json();
+  //   if (info) {
+  //     setTodosTrabajadores(info.data);
+  //   }
+  //   return info.data;
+  // };
   useEffect(() => {
     getTrabajadores();
-    getTodosTrabajadores();
   }, []);
 
   useEffect(() => {
@@ -215,10 +214,12 @@ const Adeudo = ({ setTitle }) => {
             </p>
             <Select
               style={{ width: "100%" }}
-              options={todosTrabajadores.map((item) => {
+              options={trabajadores.map((item) => {
                 return {
-                  value: item.DE_NOMB + " " + item.AP_PATE + " " + item.AP_MATE,
-                  label: item.DE_NOMB + " " + item.AP_PATE + " " + item.AP_MATE,
+                  value:
+                    item.DE_NOMB + " " + item.AP_PATE + " " + item.AP_MATE,
+                  label:
+                    item.DE_NOMB + " " + item.AP_PATE + " " + item.AP_MATE,
                 };
               })}
               placeholder="Trabajador"

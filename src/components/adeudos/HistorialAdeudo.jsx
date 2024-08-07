@@ -9,7 +9,7 @@ import {
 import dayjs from "dayjs";
 import ModalVerAdeudo from "./ModalVerAdeudo";
 
-const HistorialAdeudo = () => {
+const HistorialAdeudo = ({ setTitle}) => {
 
 
   const [adeudo, setAdeudo] = useState([]);
@@ -25,6 +25,7 @@ const HistorialAdeudo = () => {
   };
 
   useEffect(() => {
+    setTitle("Historial de adeudos")
     getAdeudo();
   }, []);
 

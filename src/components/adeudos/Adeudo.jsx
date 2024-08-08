@@ -139,6 +139,7 @@ const Adeudo = ({ setTitle }) => {
           planilla?.at(-1)?.AP_PATE +
           " " +
           planilla?.at(-1)?.AP_MATE || "",
+      usuario_id: localStorage.getItem("usuario")
     };
     if (!format.modalidad || !format.encargado || !format.trabajador) {
       notification.error({

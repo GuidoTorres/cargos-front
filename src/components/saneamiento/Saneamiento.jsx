@@ -334,7 +334,7 @@ const Saneamiento = ({ setTitle }) => {
             </div>
             <div style={{ marginTop: "10px" }}>
               <label htmlFor="">Hasta</label>
-              <InputNumInputber
+              <Input
                 min={1}
                 onChange={(e) =>
                   setFiltros((value) => ({ ...value, endCodigoActivo: e.target.value }))

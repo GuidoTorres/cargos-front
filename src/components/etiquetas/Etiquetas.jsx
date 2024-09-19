@@ -325,7 +325,7 @@ const Etiquetas = ({ setTitle }) => {
             <div>
               <label htmlFor="">Desde</label>
               <InputNumber
-                min={1}
+                min={0}
 
                 onChange={(e) =>
                   setFiltros((value) => ({ ...value, startCodigoActivo: e }))
@@ -336,7 +336,7 @@ const Etiquetas = ({ setTitle }) => {
             <div style={{ marginTop: "10px" }}>
               <label htmlFor="">Hasta</label>
               <InputNumber
-                min={1}
+                min={0}
                 onChange={(e) =>
                   setFiltros((value) => ({ ...value, endCodigoActivo: e }))
                 }

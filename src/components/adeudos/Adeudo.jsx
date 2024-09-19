@@ -76,6 +76,7 @@ const Adeudo = ({ setTitle }) => {
   };
   const [trabajadores, setTrabajadores] = useState([]);
   const [planilla, setPlanilla] = useState();
+  const [showOtherInput, setShowOtherInput] = useState(false)
   const [todosTrabajadores, setTodosTrabajadores] = useState([]);
 
   const [data, setData] = useState({
@@ -135,10 +136,10 @@ const Adeudo = ({ setTitle }) => {
       ...data,
       jefe:
         planilla?.at(-1)?.DE_NOMB +
-          " " +
-          planilla?.at(-1)?.AP_PATE +
-          " " +
-          planilla?.at(-1)?.AP_MATE || "",
+        " " +
+        planilla?.at(-1)?.AP_PATE +
+        " " +
+        planilla?.at(-1)?.AP_MATE || "",
       usuario_id: localStorage.getItem("usuario")
     };
     if (!format.modalidad || !format.encargado || !format.trabajador) {
@@ -160,7 +161,7 @@ const Adeudo = ({ setTitle }) => {
           message: confirm.msg,
         });
         navigate('/adeudo/historial');
-    } else {
+      } else {
         notification.error({
           message: confirm.msg,
         });
@@ -178,6 +179,9 @@ const Adeudo = ({ setTitle }) => {
     { label: "indeterminado", value: "indeterminado" },
     { label: "contrato", value: "contrato" },
   ];
+
+  console.log(data);
+  
   return (
     <>
       <div className="container-adeudo">
@@ -213,27 +217,42 @@ const Adeudo = ({ setTitle }) => {
             >
               Trabajador
             </p>
+
             <Select
               style={{ width: "100%" }}
-              options={trabajadores.map((item) => {
-                return {
-                  value:
-                    item.DE_NOMB + " " + item.AP_PATE + " " + item.AP_MATE,
-                  label:
-                    item.DE_NOMB + " " + item.AP_PATE + " " + item.AP_MATE,
-                };
-              })}
+              options={[
+                ...trabajadores.map((item) => {
+                  return {
+                    value: item.DE_NOMB + " " + item.AP_PATE + " " + item.AP_MATE,
+                    label: item.DE_NOMB + " " + item.AP_PATE + " " + item.AP_MATE,
+                  };
+                }),
+                { value: "Otro", label: "Otro" }, // Agrega la opción "Otro"
+              ]}
               placeholder="Trabajador"
-              onChange={(e) => setData((data) => ({ ...data, trabajador: e }))}
+              onChange={(e) => {
+                if (e === "Otro") {
+                  // Lógica cuando se selecciona "Otro", por ejemplo, mostrar un campo de texto adicional
+                  setShowOtherInput(true);
+                } else {
+                  setShowOtherInput(false);
+                }
+                setData((data) => ({ ...data, trabajador: e }));
+              }}
               showSearch
               optionFilterProp="children"
               filterOption={(input, option) =>
-                (option?.label ?? "")
-                  .toLowerCase()
-                  .includes(input.toLowerCase())
+                (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
               }
               allowClear
             ></Select>
+            {showOtherInput && (
+              <Input
+                style={{ marginTop: 8 }}
+                placeholder="Ingrese al trabajador"
+                onChange={(e) => setData((data) => ({ ...data, trabajador: e.target.value }))}
+              />
+            )}
           </div>
           <div style={{ marginTop: "20px" }}>
             <p
@@ -670,7 +689,7 @@ const Adeudo = ({ setTitle }) => {
           <Button type="primary" onClick={postAdeudo}>
             Guardar
           </Button>
-       {/* <Button onClick={handlePrintWithValidation}>Imprimir</Button> */}
+          {/* <Button onClick={handlePrintWithValidation}>Imprimir</Button> */}
         </div>
       </section>
     </>

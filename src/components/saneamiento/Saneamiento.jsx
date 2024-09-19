@@ -299,21 +299,21 @@ const Saneamiento = ({ setTitle }) => {
             <label htmlFor="">Por Secuencia</label>
             <div>
               <label htmlFor="">Desde</label>
-              <InputNumber
+              <Input
                 min={0}
 
                 onChange={(e) =>
-                  setFiltros((value) => ({ ...value, startSeq: e }))
+                  setFiltros((value) => ({ ...value, startSeq: e.target.value }))
                 }
                 controls={false}
               />
             </div>
             <div style={{ marginTop: "10px" }}>
               <label htmlFor="">Hasta</label>
-              <InputNumber
+              <Input
                 min={0}
                 onChange={(e) =>
-                  setFiltros((value) => ({ ...value, endSeq: e }))
+                  setFiltros((value) => ({ ...value, endSeq: e.target.value }))
                 }
                 controls={false}
               />
@@ -323,21 +323,21 @@ const Saneamiento = ({ setTitle }) => {
             <label htmlFor="">Por Código Patrimonial</label>
             <div>
               <label htmlFor="">Desde</label>
-              <InputNumber
+              <Input
                 min={1}
 
                 onChange={(e) =>
-                  setFiltros((value) => ({ ...value, startCodigoActivo: e }))
+                  setFiltros((value) => ({ ...value, startCodigoActivo: e.target.value }))
                 }
                 controls={false}
               />
             </div>
             <div style={{ marginTop: "10px" }}>
               <label htmlFor="">Hasta</label>
-              <InputNumber
+              <InputNumInputber
                 min={1}
                 onChange={(e) =>
-                  setFiltros((value) => ({ ...value, endCodigoActivo: e }))
+                  setFiltros((value) => ({ ...value, endCodigoActivo: e.target.value }))
                 }
                 controls={false}
 

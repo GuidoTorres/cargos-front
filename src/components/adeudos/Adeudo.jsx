@@ -178,6 +178,7 @@ const Adeudo = ({ setTitle }) => {
     { label: "construcción civil", value: "construcción civil" },
     { label: "indeterminado", value: "indeterminado" },
     { label: "contrato", value: "contrato" },
+    { label: "por jubilación", value: "por jubilación" },
   ];
 
   console.log(data);

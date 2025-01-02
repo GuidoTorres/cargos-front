@@ -122,7 +122,7 @@ const ModalVerAdeudo = ({ data, setMostrar, mostrar }) => {
                 : data?.nombre_anio}
             </p>
             <section className="title">
-              <u>CONSTANCIA Nº {data.correlativo} - 2024</u>
+              <u>CONSTANCIA Nº {data?.correlativo} - {data?.anio}</u>
             </section>
             <section className="body" style={{fontSize:"14px"}}>
               <p style={{ textAlign: "justify", marginTop: "15px" }}>

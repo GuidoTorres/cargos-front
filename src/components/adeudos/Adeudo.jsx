@@ -140,7 +140,8 @@ const Adeudo = ({ setTitle }) => {
         planilla?.at(-1)?.AP_PATE +
         " " +
         planilla?.at(-1)?.AP_MATE || "",
-      usuario_id: localStorage.getItem("usuario")
+      usuario_id: localStorage.getItem("usuario"),
+      anio: dayjs().year()
     };
     if (!format.modalidad || !format.encargado || !format.trabajador) {
       notification.error({
@@ -180,8 +181,6 @@ const Adeudo = ({ setTitle }) => {
     { label: "contrato", value: "contrato" },
     { label: "por jubilación", value: "por jubilación" },
   ];
-
-  console.log(data);
   
   return (
     <>
@@ -391,7 +390,7 @@ const Adeudo = ({ setTitle }) => {
                   : data.nombre_anio}
               </p>
               <section className="title">
-                <u>CONSTANCIA Nº XXX - 2024</u>
+                <u>CONSTANCIA Nº XXX - {dayjs().year()}</u>
               </section>
               <section className="body">
                 <p style={{ textAlign: "justify", marginTop: "15px" }}>

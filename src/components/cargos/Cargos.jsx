@@ -8,11 +8,16 @@ import {
   Input,
   Radio,
   DatePicker,
+  Space,
+  Form,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import RegistrarCargos from "./RegistrarCargos";
 import {
+  CheckOutlined,
+  CloseOutlined,
   EditOutlined,
+  EyeOutlined,
   FolderOutlined,
   PrinterOutlined,
 } from "@ant-design/icons";
@@ -26,26 +31,66 @@ import dayjs from "dayjs";
 import ModalObservaciones from "./ModalObservaciones";
 const { RangePicker } = DatePicker;
 const Cargos = ({ setTitle }) => {
-  const [cargos, setCargos] = useState([]);
-  const [sedes, setSedes] = useState([]);
-  const [usuario, setUsuario] = useState([]);
+  const [form] = Form.useForm();
   const [centroCosto, setCentroCosto] = useState([]);
   const [ubicacion, setUbicacion] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [asignaciones, setAsignaciones] = useState([]);
   const [bienes, setBienes] = useState([]);
-  const [tipo, setTipo] = useState("");
-  const [inicio, setInicio] = useState("");
   const [modalDetalles, setModalDetalles] = useState(false);
   const [modalObservaciones, setModalObservaciones] = useState(false);
   const [dataObservacion, setDataObservacion] = useState();
-  const [editar, setEditar] = useState();
-  const [search, setSearch] = useState([]);
+  const [editingKey, setEditingKey] = useState(null);
+  const isEditing = (record) => record.key === editingKey;
+
+  const handleEdit = (record) => {
+    form.setFieldsValue({ ...record }); // Establecer valores iniciales del formulario
+    setEditingKey(record.key); // Configurar el registro en edición
+  };
+
+  const handleSave = async (record) => {
+    try {
+      const updatedRecord = await form.validateFields(); // Validar los valores editados
+      const response = await fetch(
+        "http://10.30.1.42:8084/api/v1/asignacion/actualizar/correlativo",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ...record,
+            ID_CORRELATIVO: updatedRecord.id_correlativo, // El nuevo valor editado
+          }),
+        }
+      );
+
+      if (response.ok) {
+        const updatedDataSource = asignaciones.map((item) =>
+          item.secuencia === record.secuencia
+            ? { ...item, ...updatedRecord }
+            : item
+        );
+        setAsignaciones(updatedDataSource);
+        const result = await response.json();
+        notification.success({
+          message: result.msg,
+        });
+        setEditingKey(""); // Salir del modo edición
+        // getAsignaciones()
+      } else {
+        const error = await response.json();
+        notification.error({
+          message: error.msg,
+        });
+      }
+    } catch (err) {
+      console.error("Error al guardar:", err);
+    }
+  };
+
   useEffect(() => {
     setTitle("Cargos");
     getAsignaciones();
   }, []);
-
 
   const getAsignaciones = async () => {
     const response = await fetch("http://10.30.1.42:8084/api/v1/asignacion");
@@ -57,11 +102,6 @@ const Cargos = ({ setTitle }) => {
 
   const columns = [
     {
-      title: "Nro Desplaz",
-      dataIndex: "nro_interno",
-      align: "center",
-    },
-    {
       title: "Nro Orden",
       dataIndex: "patrimonio_nro_orden",
       align: "center",
@@ -70,6 +110,7 @@ const Cargos = ({ setTitle }) => {
       title: "Correlativo",
       dataIndex: "id_correlativo",
       align: "center",
+      editable: true,
     },
     {
       title: "De",
@@ -95,21 +136,81 @@ const Cargos = ({ setTitle }) => {
       title: "Acciones",
       align: "center",
       key: "action",
-      render: (_, record) => (
-        <Flex align="center" justify="center" gap={2}>
-          <Button onClick={() => handlePrint(record)}>
-            <PrinterOutlined />
-          </Button>
-          <Button onClick={() => handleDetalles(record)}>
-            <FolderOutlined />
-          </Button>
-          <Button onClick={() => handleObservaciones(record)}>
-            <EditOutlined />
-          </Button>
-        </Flex>
-      ),
+      render: (_, record) => {
+        return isEditing(record) ? (
+          <Space>
+            <Button
+              icon={<CheckOutlined />}
+              onClick={() => handleSave(record)}
+            ></Button>
+            <Button icon={<CloseOutlined />} onClick={cancel}></Button>
+          </Space>
+        ) : (
+          <Space size={'small'}>
+            <Button onClick={() => handleEdit(record)}>
+              <EditOutlined />
+            </Button>
+            <Button onClick={() => handlePrint(record)}>
+              <PrinterOutlined />
+            </Button>
+            <Button onClick={() => handleDetalles(record)}>
+              <FolderOutlined />
+            </Button>
+            <Button onClick={() => handleObservaciones(record)}>
+              <EyeOutlined />
+            </Button>
+          </Space>
+        );
+      },
     },
   ];
+  const EditableCell = ({
+    editing,
+    dataIndex,
+    title,
+    children,
+    ...restProps
+  }) => {
+    return (
+      <td {...restProps}>
+        {editing ? (
+          <Form.Item
+            name={dataIndex}
+            style={{ margin: 0 }}
+            rules={[
+              {
+                required: true,
+                message: `Por favor ingrese ${title}!`,
+              },
+            ]}
+          >
+            <Input style={{ width: "80px" }} />
+          </Form.Item>
+        ) : (
+          children
+        )}
+      </td>
+    );
+  };
+
+  // Función para cancelar la edición
+  const cancel = () => {
+    setEditingKey("");
+  };
+  const mergedColumns = columns.map((col) => {
+    if (!col.editable) {
+      return col;
+    }
+    return {
+      ...col,
+      onCell: (record) => ({
+        record,
+        dataIndex: col.dataIndex,
+        title: col.title,
+        editing: isEditing(record), // Activa la edición solo si coincide con la clave
+      }),
+    };
+  });
 
   const handleObservaciones = async (docData) => {
     setModalObservaciones(true);
@@ -188,8 +289,6 @@ const Cargos = ({ setTitle }) => {
     }
     return info.data;
   };
-
-
 
   const handlePrintDetalles = async (
     docData,
@@ -335,15 +434,29 @@ const Cargos = ({ setTitle }) => {
                   placeholder={["Inicio", "Fin"]}
                   onChange={(date) => registrarFechas(date)}
                 />
-                <Button onClick={() => handleUpdate()}>
+                {/* <Button onClick={() => handleUpdate()}>
                   Actualizar correlativo
-                </Button>
+                </Button> */}
               </div>
             </div>
           </div>
         </div>
       </div>
-      <Table columns={columns} dataSource={asignaciones} />
+      <Form form={form} component={false}>
+        <Table
+          components={{
+            body: {
+              cell: EditableCell,
+            },
+          }}
+          columns={mergedColumns}
+          dataSource={asignaciones?.map((item, index) => ({
+            ...item,
+            key: item.id || index,
+          }))}
+        />
+      </Form>
+
       {isModalOpen && (
         <div>
           <ImprimirCargo />

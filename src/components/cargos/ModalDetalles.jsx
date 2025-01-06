@@ -35,11 +35,6 @@ const ModalDetalles = ({ modalDetalle, setModalDetalle, data, setBienes }) => {
       align: "center",
     },
     {
-      title: "Cód Barra / Inv. Anterior",
-      dataIndex: "codigo_barra",
-      align: "center",
-    },
-    {
       title: "Descripción",
       dataIndex: "descripcion",
       align: "center",

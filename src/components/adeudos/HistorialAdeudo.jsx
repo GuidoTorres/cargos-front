@@ -33,6 +33,7 @@ const HistorialAdeudo = ({ setTitle}) => {
     {
       title: "Id",
       dataIndex: "id",
+      render: (_, record) => record.anio +" - "+ record.correlativo,
       align: "center",
     },
     {

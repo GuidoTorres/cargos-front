@@ -82,7 +82,7 @@ const Adeudo = ({ setTitle }) => {
   const [data, setData] = useState({
     trabajador: "",
     nombre_anio:
-      '"AÑO DEL BICENTENARIO, DE LA CONSOLIDACIÓN DE NUESTRA INDEPENDENCIA, Y DE LA CONMEMORACIÓN DE LAS HEROICAS BATALLAS DE JUNIN Y AYACUCHO"',
+      '"AÑO DE LA RECUPERACIÓN Y CONSOLIDACIÓN DE LA ECONOMÍA PERUANA"',
     contenido: "al término de su contrato con fecha",
     adeudo: "NO ADEUDA",
     modalidad: "",

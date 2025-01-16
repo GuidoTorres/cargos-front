@@ -204,7 +204,7 @@ const Adeudo = ({ setTitle }) => {
               onChange={(e) =>
                 setData((data) => ({ ...data, nombre_anio: e.target.value }))
               }
-              placeholder="AÑO DEL BICENTENARIO DE LAS BATALLAS HEROICAS DE AYACUCHO Y JUNIN"
+              placeholder="AÑO DE LA RECUPERACIÓN Y CONSOLIDACIÓN DE LA ECONOMÍA PERUANA"
             />
           </div>
           <div style={{ marginTop: "20px" }}>

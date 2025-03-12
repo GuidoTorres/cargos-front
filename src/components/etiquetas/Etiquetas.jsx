@@ -86,7 +86,7 @@ const Etiquetas = ({ setTitle }) => {
     }
     const queryParams = new URLSearchParams(params).toString();
     const response = await fetch(
-      `http://10.30.1.42:8084/api/v1/etiqueta?${queryParams}`
+      `http://localhost:3001/api/v1/etiqueta?${queryParams}`
     );
     const info = await response.json();
     if (info) {

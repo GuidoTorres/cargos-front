@@ -264,7 +264,7 @@ const Cargos = ({ setTitle }) => {
     }
 
     // Construir la URL base para la búsqueda
-    let url = `http://localhost:3001/api/v1/asignacion`;
+    let url = `http://10.30.1.42:8084/api/v1/asignacion`;
     let hasQueryParams = false;
 
     // Añadir parámetro de búsqueda si existe

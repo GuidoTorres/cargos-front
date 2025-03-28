@@ -41,6 +41,7 @@ const Cargos = ({ setTitle }) => {
   const [modalObservaciones, setModalObservaciones] = useState(false);
   const [dataObservacion, setDataObservacion] = useState();
   const [editingKey, setEditingKey] = useState(null);
+  const [correlativoFilter, setCorrelativoFilter] = useState("todos"); // Nuevo estado para el filtro de correlativos
   const isEditing = (record) => record.key === editingKey;
 
   const handleEdit = (record) => {
@@ -96,7 +97,9 @@ const Cargos = ({ setTitle }) => {
     const response = await fetch("http://10.30.1.42:8084/api/v1/asignacion");
     const info = await response.json();
     if (info) {
-      setAsignaciones(info.data);
+      setOriginalData(info.data);
+      // Aplicar filtro de correlativo a los datos iniciales
+      filterByCorrelativo(info.data, correlativoFilter);
     }
   };
 
@@ -146,7 +149,7 @@ const Cargos = ({ setTitle }) => {
             <Button icon={<CloseOutlined />} onClick={cancel}></Button>
           </Space>
         ) : (
-          <Space size={'small'}>
+          <Space size={"small"}>
             <Button onClick={() => handleEdit(record)}>
               <EditOutlined />
             </Button>
@@ -228,21 +231,68 @@ const Cargos = ({ setTitle }) => {
     }
   };
 
-  const searchData = async (value) => {
-    if (value) {
-      const response = await fetch(
-        `http://10.30.1.42:8084/api/v1/asignacion?search=${value}`
-      );
+  // Función unificada para aplicar todos los filtros (búsqueda, fechas y correlativo)
+  const applyFilters = async (searchValue = null, dateRange = null, correlativoValue = null) => {
+    // Obtener los valores actuales si no se proporcionan
+    const currentSearchValue = searchValue !== null ? searchValue : 
+      document.querySelector(".ant-input-search-input")?.value || "";
+    
+    const currentCorrelativoValue = correlativoValue !== null ? correlativoValue : correlativoFilter;
+    
+    // Obtener fechas actuales del DatePicker si no se proporcionan
+    let currentDateRange = dateRange;
+    if (dateRange === null) {
+      const datePickerElement = document.querySelector(".ant-picker-range");
+      if (datePickerElement && 
+          datePickerElement.__reactProps$ && 
+          datePickerElement.__reactProps$.value && 
+          datePickerElement.__reactProps$.value.length === 2) {
+        currentDateRange = datePickerElement.__reactProps$.value;
+      }
+    }
+
+    // Si el buscador está vacío (se borró el texto) y no hay fechas seleccionadas
+    if (searchValue === "" || (!currentSearchValue && !currentDateRange) || (currentSearchValue === "" && !currentDateRange)) {
+      // Siempre hacer una petición para obtener datos frescos cuando se borra el buscador
+      const response = await fetch("http://10.30.1.42:8084/api/v1/asignacion");
       const info = await response.json();
       if (info) {
-        setAsignaciones(info.data);
+        setOriginalData(info.data);
+        filterByCorrelativo(info.data, currentCorrelativoValue);
       }
-    } else {
-      const response = await fetch(`http://10.30.1.42:8084/api/v1/asignacion`);
-      const info = await response.json();
-      if (info) {
-        setAsignaciones(info.data);
-      }
+      return;
+    }
+
+    // Construir la URL base para la búsqueda
+    let url = `http://localhost:3001/api/v1/asignacion`;
+    let hasQueryParams = false;
+
+    // Añadir parámetro de búsqueda si existe
+    if (currentSearchValue) {
+      url += `?search=${currentSearchValue}`;
+      hasQueryParams = true;
+    }
+
+    // Añadir parámetros de fecha si existen
+    if (currentDateRange) {
+      const fechas = currentDateRange.map(item => dayjs(item).format("YYYY-MM-DD"));
+      const fechaInicio = fechas[0];
+      const fechaFin = fechas[1];
+      
+      url += hasQueryParams 
+        ? `&inicio=${fechaInicio}&fin=${fechaFin}` 
+        : `?inicio=${fechaInicio}&fin=${fechaFin}`;
+      
+      hasQueryParams = true;
+    }
+
+    // Realizar la petición
+    const response = await fetch(url);
+    const info = await response.json();
+    if (info) {
+      setOriginalData(info.data);
+      // Aplicar filtro de correlativo a los datos obtenidos
+      filterByCorrelativo(info.data, currentCorrelativoValue);
     }
   };
 
@@ -310,77 +360,99 @@ const Cargos = ({ setTitle }) => {
     URL.revokeObjectURL(url);
   };
 
+  // Función simplificada para manejar cambios en las fechas
   const registrarFechas = async (date) => {
-    if (date) {
-      const fechas = date?.map((item) => dayjs(item).format("YYYY-MM-DD"));
-
-      const fechaInicio = fechas.at(0);
-      const fechaFin = fechas.at(1);
-
-      const response = await fetch(
-        `http://10.30.1.42:8084/api/v1/asignacion?inicio=${fechaInicio}&fin=${fechaFin}`
-      );
+    // Si date es null, significa que el usuario limpió el DatePicker
+    if (!date) {
+      // Restaurar datos originales pero manteniendo el filtro de correlativo actual
+      // Primero obtenemos los datos frescos del servidor para asegurarnos de no usar datos filtrados
+      const response = await fetch("http://10.30.1.42:8084/api/v1/asignacion");
       const info = await response.json();
       if (info) {
-        setAsignaciones(info.data);
+        setOriginalData(info.data);
+        // Aplicar solo el filtro de correlativo a los datos frescos
+        filterByCorrelativo(info.data, correlativoFilter);
       }
-    } else {
-      const response = await fetch(`http://10.30.1.42:8084/api/v1/asignacion`);
-      const info = await response.json();
-      if (info) {
-        setAsignaciones(info.data);
-      }
+      return;
     }
+    // Llamar a la función unificada de filtros con las nuevas fechas
+    await applyFilters(null, date, null);
   };
 
-  const handleUpdate = async () => {
-    const response = await fetch(
-      `http://10.30.1.42:8084/api/v1/asignacion/actualizar`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const confirm = await response.json();
+  // Estado para mantener los datos originales sin filtrar
+  const [originalData, setOriginalData] = useState([]);
 
-    if (response.status === 200) {
-      const response = await fetch(`http://10.30.1.42:8084/api/v1/asignacion`);
-      const info = await response.json();
-      if (info) {
-        setAsignaciones(info.data);
-      }
-      notification.success({
-        message: confirm.msg,
-      });
-    } else {
-      notification.error({
-        message: confirm.msg,
-      });
+  // Función para filtrar por correlativo (ahora solo aplica el filtro a los datos, no hace peticiones)
+  const filterByCorrelativo = (data, filterValue) => {
+    if (!data) return;
+
+    let filteredData = [...data];
+
+    if (filterValue === "con_correlativo") {
+      filteredData = filteredData.filter((item) => item.id_correlativo);
+    } else if (filterValue === "sin_correlativo") {
+      filteredData = filteredData.filter((item) => !item.id_correlativo);
     }
+
+    setAsignaciones(filteredData);
   };
 
-  const handleDelete = async (id) => {
-    const response = await fetch(`http://10.30.1.42:8084/api/v1/cargos/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const confirm = await response.json();
-
-    if (response.status === 200) {
-      notification.success({
-        message: confirm.msg,
-      });
-      // getCargos();
-    } else {
-      notification.error({
-        message: confirm.msg,
-      });
-    }
+  // Manejador para el cambio en el filtro de correlativo
+  const handleCorrelativoFilterChange = (value) => {
+    setCorrelativoFilter(value);
+    // Llamar a la función unificada de filtros con el nuevo valor de correlativo
+    applyFilters(null, null, value);
   };
+
+  // const handleUpdate = async () => {
+  //   const response = await fetch(
+  //     `http://10.30.1.42:8084/api/v1/asignacion/actualizar`,
+  //     {
+  //       method: "PUT",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     }
+  //   );
+  //   const confirm = await response.json();
+
+  //   if (response.status === 200) {
+  //     const response = await fetch(`http://10.30.1.42:8084/api/v1/asignacion`);
+  //     const info = await response.json();
+  //     if (info) {
+  //       setAsignaciones(info.data);
+  //       setOriginalData(info.data);
+  //     }
+  //     notification.success({
+  //       message: confirm.msg,
+  //     });
+  //   } else {
+  //     notification.error({
+  //       message: confirm.msg,
+  //     });
+  //   }
+  // };
+
+  // const handleDelete = async (id) => {
+  //   const response = await fetch(`http://10.30.1.42:8084/api/v1/cargos/${id}`, {
+  //     method: "DELETE",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
+  //   const confirm = await response.json();
+
+  //   if (response.status === 200) {
+  //     notification.success({
+  //       message: confirm.msg,
+  //     });
+  //     // getCargos();
+  //   } else {
+  //     notification.error({
+  //       message: confirm.msg,
+  //     });
+  //   }
+  // };
   return (
     <>
       <div
@@ -420,12 +492,26 @@ const Cargos = ({ setTitle }) => {
                 style={{
                   display: "flex",
                   justifyContent: "flex-start",
-                  width: "30%",
+                  width: "60%",
+                  gap: "10px",
                 }}
               >
                 <Search
                   placeholder="Buscar por nro orden o usuario final"
-                  onChange={(e) => searchData(e.target.value)}
+                  onChange={(e) => applyFilters(e.target.value, null, null)}
+                  allowClear={true}
+                  style={{ width: "50%" }}
+                />
+                <Select
+                  placeholder="Filtrar por correlativo"
+                  style={{ width: "30%" }}
+                  onChange={handleCorrelativoFilterChange}
+                  value={correlativoFilter}
+                  options={[
+                    { value: "todos", label: "Todos los registros" },
+                    { value: "con_correlativo", label: "Con correlativo" },
+                    { value: "sin_correlativo", label: "Sin correlativo" },
+                  ]}
                 />
               </div>
               <div>
@@ -433,6 +519,7 @@ const Cargos = ({ setTitle }) => {
                   format="DD-MM-YYYY"
                   placeholder={["Inicio", "Fin"]}
                   onChange={(date) => registrarFechas(date)}
+                  allowClear={true}
                 />
                 {/* <Button onClick={() => handleUpdate()}>
                   Actualizar correlativo

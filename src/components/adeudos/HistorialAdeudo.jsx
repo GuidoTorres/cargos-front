@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Button, Table } from "antd";
+import { API_URL } from "../../config/api";
 import {
   EditOutlined,
   EyeFilled,
@@ -17,7 +18,7 @@ const HistorialAdeudo = ({ setTitle}) => {
   const [editar, setEditar] = useState();
 
   const getAdeudo = async () => {
-    const response = await fetch(`http://10.30.1.42:8084/api/v1/adeudos`);
+    const response = await fetch(`${API_URL}/adeudos`);
     const info = await response.json();
     if (info) {
       setAdeudo(info.data);

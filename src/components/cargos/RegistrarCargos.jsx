@@ -1,5 +1,6 @@
 import { Input, Modal, Select, Typography, notification } from "antd";
 import React, { useEffect, useState } from "react";
+import { API_URL } from "../../config/api";
 
 const RegistrarCargos = ({
   isModalOpen,
@@ -17,7 +18,7 @@ const RegistrarCargos = ({
   };
 
   const getArea = async () => {
-    const response = await fetch("http://10.30.1.42:8084/api/v1/unidad");
+    const response = await fetch(`${API_URL}/unidad`);
 
     const info = await response.json();
     if (info) setArea(info.data);
@@ -41,7 +42,7 @@ const RegistrarCargos = ({
   const postCargos = async () => {
     if (editar !== undefined) {
       const response = await fetch(
-        `http://10.30.1.42:8084/api/v1/cargos/${editar.id}`,
+        `${API_URL}/cargos/${editar.id}`,
         {
           method: "PUT",
           headers: {
@@ -64,7 +65,7 @@ const RegistrarCargos = ({
         });
       }
     } else {
-      const response = await fetch("http://10.30.1.42:8084/api/v1/cargos", {
+      const response = await fetch(`${API_URL}/cargos`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

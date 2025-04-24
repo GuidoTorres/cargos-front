@@ -1,5 +1,6 @@
 import { Modal, Input, notification } from "antd";
 import React, { useState } from "react";
+import { API_URL } from "../../config/api";
 
 const ModalObservaciones = ({
   modalObservaciones,
@@ -23,7 +24,7 @@ const ModalObservaciones = ({
       OBSERVACIONES: observacion,
     };
     console.log(asignacion);
-    const response = await fetch(`http://10.30.1.42:8084/api/v1/asignacion`, {
+    const response = await fetch(`${API_URL}/asignacion`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

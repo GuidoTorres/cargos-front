@@ -6,6 +6,7 @@ import { Select, Input, Image, Button, DatePicker, notification } from "antd";
 import { useReactToPrint } from "react-to-print";
 import dayjs from "dayjs";
 import { useNavigate } from 'react-router-dom';
+import { API_URL } from "../../config/api";
 
 import "dayjs/locale/es";
 
@@ -103,7 +104,7 @@ const Adeudo = ({ setTitle }) => {
   }, [data.encargado, data.tipo_encargado]);
 
   const getTrabajadores = async () => {
-    const response = await fetch(`http://10.30.1.42:8084/api/v1/planilla`);
+    const response = await fetch(`${API_URL}/planilla`);
     const info = await response.json();
     if (info) {
       setTrabajadores(info.data);
@@ -111,7 +112,7 @@ const Adeudo = ({ setTitle }) => {
     return info.data;
   };
   // const getTodosTrabajadores = async () => {
-  //   const response = await fetch(`http://10.30.1.42:8084/api/v1/usuario`);
+  //   const response = await fetch(`${API_URL}/usuario`);
   //   const info = await response.json();
   //   if (info) {
   //     setTodosTrabajadores(info.data);
@@ -149,7 +150,7 @@ const Adeudo = ({ setTitle }) => {
           "Los campos: Trabajador, Modalidad y Revisado por son obligatorios!",
       });
     } else {
-      const response = await fetch(`http://10.30.1.42:8084/api/v1/adeudos`, {
+      const response = await fetch(`${API_URL}/adeudos`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

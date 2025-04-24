@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import imagen from "../../assets/autodema.png";
 import { useNavigate, useLocation } from "react-router-dom";
 import { InventarioContext } from "../../context/InventarioContext";
+import { API_URL } from "../../config/api";
 const Login = ({}) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -18,7 +19,7 @@ const Login = ({}) => {
   };
 
   const auth = async () => {
-    const response = await fetch(`http://10.30.1.42:8084/api/v1/auth`, {
+    const response = await fetch(`${API_URL}/auth`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

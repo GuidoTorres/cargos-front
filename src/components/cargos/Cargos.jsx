@@ -24,12 +24,14 @@ import {
 import Search from "antd/es/input/Search";
 import ImprimirCargo from "./ImprimirCargo";
 import ModalDetalles from "./ModalDetalles";
+import { API_URL } from "../../config/api";
 
 import CargoPersonal from "../PDF/CargoPersonal";
 import { PDFDownloadLink, PDFViewer, pdf } from "@react-pdf/renderer";
 import dayjs from "dayjs";
 import ModalObservaciones from "./ModalObservaciones";
 const { RangePicker } = DatePicker;
+
 const Cargos = ({ setTitle }) => {
   const [form] = Form.useForm();
   const [centroCosto, setCentroCosto] = useState([]);
@@ -94,7 +96,7 @@ const Cargos = ({ setTitle }) => {
   }, []);
 
   const getAsignaciones = async () => {
-    const response = await fetch("http://10.30.1.42:8084/api/v1/asignacion");
+    const response = await fetch(`${API_URL}/asignacion`);
     const info = await response.json();
     if (info) {
       setOriginalData(info.data);

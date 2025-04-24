@@ -1,9 +1,18 @@
-import { Input, Select, Table, Button, InputNumber, DatePicker, notification } from "antd";
+import {
+  Input,
+  Select,
+  Table,
+  Button,
+  InputNumber,
+  DatePicker,
+  notification,
+} from "antd";
 import React, { useEffect, useState, useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 import { PrinterOutlined } from "@ant-design/icons";
 import "./etiquetas.css";
 import BarCode from "./BarCode";
+import { API_URL } from "../../config/api";
 const { Search } = Input;
 const Etiquetas = ({ setTitle }) => {
   const barcodeRef = useRef();
@@ -42,7 +51,7 @@ const Etiquetas = ({ setTitle }) => {
   }, [filtros]);
 
   const getSedes = async (docData) => {
-    const response = await fetch(`http://10.30.1.42:8084/api/v1/sedes`);
+    const response = await fetch(`${API_URL}/sedes`);
     const info = await response.json();
     if (info) {
       setSedes(info.data);
@@ -50,7 +59,7 @@ const Etiquetas = ({ setTitle }) => {
     return info.data;
   };
   const getUsuario = async (docData) => {
-    const response = await fetch(`http://10.30.1.42:8084/api/v1/usuario`);
+    const response = await fetch(`${API_URL}/usuario`);
     const info = await response.json();
     if (info) {
       setUsuario(info.data);
@@ -59,9 +68,7 @@ const Etiquetas = ({ setTitle }) => {
   };
 
   const getCentroCosto = async (docData) => {
-    const response = await fetch(
-      `http://10.30.1.42:8084/api/v1/centro_costo/all`
-    );
+    const response = await fetch(`${API_URL}/centro_costo/all`);
     const info = await response.json();
     if (info) {
       setCentroCosto(info.data);
@@ -69,7 +76,7 @@ const Etiquetas = ({ setTitle }) => {
     return info.data;
   };
   const getUbicacion = async (docData) => {
-    const response = await fetch(`http://10.30.1.42:8084/api/v1/ubicacion`);
+    const response = await fetch(`${API_URL}/ubicacion`);
     const info = await response.json();
     if (info) {
       setUbicacion(info.data);
@@ -85,9 +92,7 @@ const Etiquetas = ({ setTitle }) => {
       }
     }
     const queryParams = new URLSearchParams(params).toString();
-    const response = await fetch(
-      `http://localhost:3001/api/v1/etiqueta?${queryParams}`
-    );
+    const response = await fetch(`${API_URL}/etiqueta?${queryParams}`);
     const info = await response.json();
     if (info) {
       setData(info.data);
@@ -104,11 +109,7 @@ const Etiquetas = ({ setTitle }) => {
       dataIndex: "codigo_activo",
       align: "center",
     },
-    {
-      title: "Cod Barra / Inv. Anterior",
-      dataIndex: "codigo_barra",
-      align: "center",
-    },
+
     {
       title: "Descripción",
       dataIndex: "descripcion",
@@ -148,20 +149,17 @@ const Etiquetas = ({ setTitle }) => {
   };
 
   const handleMultiBarcodePrint = () => {
-    if(data.length <= 100 ){
+    if (data.length <= 100) {
       setBarcode(data);
       setPrintTrigger(true);
-
-    }else{
+    } else {
       notification.error({
         message: "Solo es posible imprimir 100 etiquetas a la vez.",
       });
     }
   };
 
-
   return (
-    
     <div className="container">
       <div className="filters">
         <section className="filters-left">
@@ -302,9 +300,11 @@ const Etiquetas = ({ setTitle }) => {
               <label htmlFor="">Desde</label>
               <Input
                 min={1}
-
                 onChange={(e) =>
-                  setFiltros((value) => ({ ...value, startSeq: e.target.value }))
+                  setFiltros((value) => ({
+                    ...value,
+                    startSeq: e.target.value,
+                  }))
                 }
                 controls={false}
               />
@@ -326,9 +326,11 @@ const Etiquetas = ({ setTitle }) => {
               <label htmlFor="">Desde</label>
               <Input
                 min={0}
-
                 onChange={(e) =>
-                  setFiltros((value) => ({ ...value, startCodigoActivo:e.target.value }))
+                  setFiltros((value) => ({
+                    ...value,
+                    startCodigoActivo: e.target.value,
+                  }))
                 }
                 controls={false}
               />
@@ -338,10 +340,12 @@ const Etiquetas = ({ setTitle }) => {
               <Input
                 min={0}
                 onChange={(e) =>
-                  setFiltros((value) => ({ ...value, endCodigoActivo:e.target.value }))
+                  setFiltros((value) => ({
+                    ...value,
+                    endCodigoActivo: e.target.value,
+                  }))
                 }
                 controls={false}
-
               />
             </div>
           </div>
@@ -351,7 +355,9 @@ const Etiquetas = ({ setTitle }) => {
         <Search
           placeholder="Buscar"
           style={{ width: "300px" }}
-          onChange={(e) => setFiltros((value) => ({ ...value, desc: e.target.value }))}
+          onChange={(e) =>
+            setFiltros((value) => ({ ...value, desc: e.target.value }))
+          }
         />
         <Button onClick={(e) => handleMultiBarcodePrint()}>
           Imprimir Varios

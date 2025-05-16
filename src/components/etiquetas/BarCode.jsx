@@ -87,7 +87,7 @@ const BarCode = ({ values, saneamiento }) => {
                 paddingLeft: "0",
               }}
             >
-              <label>{`O/C` + " " + value.nro_orden}</label>
+              <label>{`O/C` }{"  "}{value.nro_orden ? value.nro_orden : " S/N"}</label>
             </div>
 
             <Barcode
@@ -107,7 +107,7 @@ const BarCode = ({ values, saneamiento }) => {
                   marginRight: "-2px",
                 }}
               >
-                {saneamiento ? "2023" : new Date().getFullYear()}
+                {saneamiento ? "2024" : new Date().getFullYear()}
               </p>
             </div>
           </div>

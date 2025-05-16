@@ -31,7 +31,7 @@ const Etiquetas = ({ setTitle }) => {
     familia: "",
     endSeq: "",
     startSeq: "",
-    anio: "2024",
+    anio: new Date().getFullYear(),
     startCodigoActivo: "",
     endCodigoActivo: "",
     endCodigoActivo: "",

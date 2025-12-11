@@ -6,7 +6,7 @@ import "./styles/mainPage.css";
 import HeaderContent from "../components/HeaderContent";
 import TablaTrabajador from "../components/trabajador/TablaTrabajador";
 import Equipos from "../components/equipos/Equipos";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Areas from "../components/areas/Areas";
 import Mantenimientos from "../components/mantenimientos/Mantenimientos";
 import Dashboard from "../components/dashboard/Dashboard";
@@ -66,6 +66,10 @@ const MainPage = () => {
             </Header>
             <Content className="content">
               <Routes>
+                <Route
+                  path="/"
+                  element={<Navigate to="/cargos" replace />}
+                />
                 {/* <Route
                   path="/trabajadores"
                   element={<ProtectedRoute><TablaTrabajador setTitle={setTitle} /></ProtectedRoute>}
